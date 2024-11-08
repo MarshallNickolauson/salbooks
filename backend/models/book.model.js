@@ -13,14 +13,17 @@ const partSchema = mongoose.Schema({
     chapters: [chapterSchema],
 });
 
-const bookSchema = mongoose.Schema({
-    title: { type: String, required: true },
-    introduction: { type: String },
-    preface: { type: String },
-    parts: [partSchema],
-    aboutAuthor: { type: String, required: true },
-    color: { type: String },
-});
+const bookSchema = mongoose.Schema(
+    {
+        title: { type: String, required: true },
+        introduction: { type: String },
+        preface: { type: String },
+        parts: [partSchema],
+        aboutAuthor: { type: String, required: true },
+        color: { type: String },
+    },
+    { timestamps: true }
+);
 
 const Book = mongoose.model('Book', bookSchema);
 
