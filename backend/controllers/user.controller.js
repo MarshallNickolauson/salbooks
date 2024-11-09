@@ -35,7 +35,7 @@ export const authUser = expressAsyncHandler(async (req, res) => {
 });
 
 // @desc    Log user out
-// @route   GET /api/users/logout
+// @route   POST /api/users/logout
 // @access  Private
 export const logout = expressAsyncHandler(async (req, res) => {
     res.clearCookie('jwt');
