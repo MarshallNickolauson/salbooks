@@ -47,7 +47,7 @@ const MainLayout = () => {
     return (
         <>
             <Header />
-            <div className='flex min-h-screen font-roboto'>
+            <div className='flex max-h-[80vh] font-roboto'>
                 <div className='w-3/12 md:w-3/12'>
                     {isLoading ? (
                         <p>Loading...</p>
@@ -67,7 +67,7 @@ const MainLayout = () => {
                                     <div
                                         className={`transition-max-height duration-300 ease-in-out overflow-auto pl-3 ${
                                             expandedBookId === book._id
-                                                ? 'max-h-screen'
+                                                ? 'max-h-[80vh]'
                                                 : 'max-h-0'
                                         }`}
                                     >
@@ -105,7 +105,7 @@ const MainLayout = () => {
                                                 <div
                                                     className={`transition-max-height duration-300 ease-in-out overflow-auto pl-3 ${
                                                         expandedParts[part._id]
-                                                            ? 'max-h-screen'
+                                                            ? 'max-h-[80vh]'
                                                             : 'max-h-0'
                                                     }`}
                                                 >
@@ -148,7 +148,9 @@ const MainLayout = () => {
                         </div>
                     )}
                 </div>
-                <div className='w-9/12 md:w-9/12'>Content</div>
+                <div className='w-9/12 md:w-9/12'>
+                    <Outlet />
+                </div>
             </div>
         </>
     );
