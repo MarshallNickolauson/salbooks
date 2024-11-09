@@ -1,13 +1,25 @@
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import { useGetBookIntroductionByTitleQuery } from '../slices/bookApiSlice';
 
 const IntroductionScreen = () => {
-    const {bookTitle} = useParams()
+    const { bookTitle } = useParams();
 
-  return (
-    <div>
-      Book Introduction
-    </div>
-  )
-}
+    const {
+        data: introduction,
+        error,
+        isLoading,
+    } = useGetBookIntroductionByTitleQuery(bookTitle);
 
-export default IntroductionScreen
+    return isLoading ? (
+        <p>Loading...</p>
+    ) : error ? (
+        <p>Error: {error}</p>
+    ) : (
+        <div>
+            <h1 className='text-2xl font-bold mb-4'>{bookTitle}</h1>
+            <p>{introduction.introduction}</p>
+        </div>
+    );
+};
+
+export default IntroductionScreen;

@@ -85,6 +85,7 @@ export const getPartPrefaceByTitleAndNumber = expressAsyncHandler(
 // @access  Public
 export const getChapterContentByTitleAndNumbers = expressAsyncHandler(
     async (req, res) => {
+        console.log(req.params);
         const book = await Book.findOne(
             { title: req.params.bookTitle },
             'parts'

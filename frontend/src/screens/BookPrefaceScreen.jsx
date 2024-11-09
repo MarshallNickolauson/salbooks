@@ -1,13 +1,25 @@
 import { useParams } from 'react-router-dom';
+import { useGetBookPrefaceByTitleQuery } from '../slices/bookApiSlice';
 
 const BookPrefaceScreen = () => {
-    const {bookTitle} = useParams();
+    const { bookTitle } = useParams();
 
-  return (
-    <div>
-        Book Preface
-    </div>
-  )
-}
+    const {
+        data: preface,
+        error,
+        isLoading,
+    } = useGetBookPrefaceByTitleQuery(bookTitle);
 
-export default BookPrefaceScreen
+    return isLoading ? (
+        <p>Loading...</p>
+    ) : error ? (
+        <p>Error: {error}</p>
+    ) : (
+        <div>
+            <h1 className='text-2xl font-bold mb-4'>{bookTitle}</h1>
+            <p>{preface.preface}</p>
+        </div>
+    );
+};
+
+export default BookPrefaceScreen;
