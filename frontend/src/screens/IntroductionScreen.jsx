@@ -6,6 +6,8 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useEffect, useState } from 'react';
+import quillModules from '../utils/quillModules';
+import formattedBookTitle from '../utils/formatBookTitle';
 
 const IntroductionScreen = () => {
     const { bookTitle } = useParams();
@@ -20,7 +22,7 @@ const IntroductionScreen = () => {
 
     const {
         data: introduction,
-        error: getIntroductionError,
+        error: introductionError,
         isLoading: isIntroductionLoading,
     } = useGetBookIntroductionByTitleQuery(bookTitle);
 
@@ -48,23 +50,10 @@ const IntroductionScreen = () => {
         setIsEditing(!isEditing);
     };
 
-    const formattedBookTitle = (title) => {
-        return title
-            .replace(/-/g, ' ')
-            .replace(/\b\w/g, (l) => l.toUpperCase());
-    };
-
-    const quillModules = {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'link'],
-            [{ script: 'sub' }, { script: 'super' }],
-        ],
-    };
-
     return isIntroductionLoading ? (
         <p>Loading...</p>
-    ) : getIntroductionError ? (
-        <p>Error: {getIntroductionError}</p>
+    ) : introductionError ? (
+        <p>Error: {introductionError}</p>
     ) : (
         <div>
             <div className='flex flex-row'>

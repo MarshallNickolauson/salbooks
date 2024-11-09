@@ -63,6 +63,18 @@ export const getBookPrefaceByTitle = expressAsyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Update book preface by title
+// @route   PUT /api/books/:bookTitle/preface
+// @access  Private/Admin
+export const updateBookPrefaceByTitle = expressAsyncHandler(async (req, res) => {
+    const book = await Book.findOne({ title: req.params.bookTitle });
+    if (book) {
+        book.preface = req.body.preface;
+        const updatedBook = await book.save();
+        res.json(updatedBook);
+    }
+});
+
 // @desc    Fetch part preface by title and part number
 // @route   GET /api/books/:bookTitle/parts/:partNumber/preface
 // @access  Public
@@ -81,6 +93,31 @@ export const getPartPrefaceByTitleAndNumber = expressAsyncHandler(
                     _id: part._id,
                     preface: part.preface,
                 });
+            } else {
+                res.status(404);
+                throw new Error('Part not found');
+            }
+        } else {
+            res.status(404);
+            throw new Error('Book not found');
+        }
+    }
+);
+
+// @desc    Update part preface by title and part number
+// @route   PUT /api/books/:bookTitle/parts/:partNumber/preface
+// @access  Private/Admin
+export const updatePartPrefaceByTitleAndNumber = expressAsyncHandler(
+    async (req, res) => {
+        const book = await Book.findOne({ title: req.params.bookTitle }, 'parts');
+        if (book) {
+            const part = book.parts.find(
+                (part) => part.part === parseInt(req.params.partNumber)
+            );
+            if (part) {
+                part.preface = req.body.preface;
+                const updatedBook = await book.save();
+                res.json(updatedBook);
             } else {
                 res.status(404);
                 throw new Error('Part not found');
@@ -117,6 +154,40 @@ export const getChapterContentByTitleAndNumbers = expressAsyncHandler(
                         title: chapter.title,
                         content: chapter.content,
                     });
+                } else {
+                    res.status(404);
+                    throw new Error('Chapter not found');
+                }
+            } else {
+                res.status(404);
+                throw new Error('Part not found');
+            }
+        } else {
+            res.status(404);
+            throw new Error('Book not found');
+        }
+    }
+);
+
+// @desc    Update chapter content by title, part number, and chapter number
+// @route   PUT /api/books/:bookTitle/parts/:partNumber/chapters/:chapterNumber/content
+// @access  Private/Admin
+export const updateChapterContentByTitleAndNumbers = expressAsyncHandler(
+    async (req, res) => {
+        const book = await Book.findOne({ title: req.params.bookTitle }, 'parts');
+        if (book) {
+            const part = book.parts.find(
+                (part) => part.part === parseInt(req.params.partNumber)
+            );
+            if (part) {
+                const chapter = part.chapters.find(
+                    (chapter) =>
+                        chapter.chapter === parseInt(req.params.chapterNumber)
+                );
+                if (chapter) {
+                    chapter.content = req.body.content;
+                    const updatedBook = await book.save();
+                    res.json(updatedBook);
                 } else {
                     res.status(404);
                     throw new Error('Chapter not found');

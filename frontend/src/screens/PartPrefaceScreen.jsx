@@ -1,29 +1,113 @@
 import { useParams } from 'react-router-dom';
-import { useGetPartPrefaceByTitleAndNumberQuery } from '../slices/bookApiSlice';
+import {
+    useGetPartPrefaceByTitleAndNumberQuery,
+    useUpdatePartPrefaceByTitleAndNumberMutation,
+} from '../slices/bookApiSlice';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useEffect, useState } from 'react';
+import quillModules from '../utils/quillModules';
+import formattedBookTitle from '../utils/formatBookTitle';
 
 const PartPrefaceScreen = () => {
     const { bookTitle, partNumber } = useParams();
-    console.log(bookTitle, partNumber);
+
+    const [partPrefaceContent, setPartPrefaceContent] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [
+        updatePartPreface,
+        { isLoading: isUpdateLoading, error: isUpdateError },
+    ] = useUpdatePartPrefaceByTitleAndNumberMutation();
 
     const {
         data: partPreface,
-        error,
-        isLoading,
+        isLoading: isPartPrefaceLoading,
+        error: partPrefaceError,
     } = useGetPartPrefaceByTitleAndNumberQuery({
         bookTitle,
         partNumber: Number(partNumber),
     });
 
-    return isLoading ? (
+    useEffect(() => {
+        if (partPreface) {
+            setPartPrefaceContent(partPreface.preface);
+        }
+    }, [partPreface]);
+
+    const handleEditorChange = (content) => {
+        setPartPrefaceContent(content);
+    };
+
+    const handleEditButton = async () => {
+        if (isEditing) {
+            try {
+                await updatePartPreface({
+                    bookTitle,
+                    partNumber: Number(partNumber),
+                    preface: partPrefaceContent,
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        setIsEditing(!isEditing);
+    };
+
+    return isPartPrefaceLoading ? (
         <p>Loading...</p>
-    ) : error ? (
-        <p>
-            Error: {error.status} - {error.data?.message || 'An error occurred'}
-        </p>
+    ) : partPrefaceError ? (
+        <p>Error: {partPrefaceError}</p>
     ) : (
         <div>
-            <h1 className='text-2xl font-bold mb-4'>{bookTitle}</h1>
-            <p>{partPreface.preface}</p>
+            <div className='flex flex-row'>
+                <h1 className='text-2xl font-bold mb-4'>
+                    {formattedBookTitle(bookTitle)}
+                </h1>
+                <div className='ml-auto flex items-center space-x-1'>
+                    <button
+                        className={`py-2 w-20 text-white bg-gray-400 hover:bg-gray-500 font-bold px-4 rounded ${
+                            isEditing ? '' : 'hidden'
+                        }`}
+                        onClick={() => setIsEditing(false)}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className={`py-2 w-20 text-white font-bold px-4 rounded ${
+                            isEditing
+                                ? 'bg-green-500 hover:bg-green-600'
+                                : 'bg-blue-500 hover:bg-blue-600'
+                        }`}
+                        onClick={handleEditButton}
+                    >
+                        {isEditing ? 'Save' : 'Edit'}
+                    </button>
+                </div>
+            </div>
+
+            {isEditing ? (
+                <ReactQuill
+                    className='mt-4'
+                    value={partPrefaceContent}
+                    onChange={handleEditorChange}
+                    theme='snow'
+                    modules={quillModules}
+                />
+            ) : (
+                <>
+                    {partPrefaceContent === '<p><br></p>' ? (
+                        <p>No content to display</p>
+                    ) : (
+                        <div
+                            className='formatted-content'
+                            dangerouslySetInnerHTML={{
+                                __html: partPrefaceContent,
+                            }}
+                        />
+                    )}
+                </>
+            )}
         </div>
     );
 };

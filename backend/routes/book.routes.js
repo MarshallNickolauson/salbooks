@@ -9,6 +9,9 @@ import {
     getChapterContentByTitleAndNumbers,
     getPartPrefaceByTitleAndNumber,
     updateBookIntroductionByTitle,
+    updateBookPrefaceByTitle,
+    updateChapterContentByTitleAndNumbers,
+    updatePartPrefaceByTitleAndNumber,
 } from '../controllers/book.controller.js';
 
 router.route('/').get(getBooks);
@@ -17,13 +20,18 @@ router
     .route('/:bookTitle/introduction')
     .get(getBookIntroductionByTitle)
     .put(updateBookIntroductionByTitle);
-router.route('/:bookTitle/preface').get(getBookPrefaceByTitle);
+router
+    .route('/:bookTitle/preface')
+    .get(getBookPrefaceByTitle)
+    .put(updateBookPrefaceByTitle);
 router
     .route('/:bookTitle/parts/:partNumber/preface')
-    .get(getPartPrefaceByTitleAndNumber);
+    .get(getPartPrefaceByTitleAndNumber)
+    .put(updatePartPrefaceByTitleAndNumber);
 router
     .route('/:bookTitle/parts/:partNumber/chapters/:chapterNumber/content')
-    .get(getChapterContentByTitleAndNumbers);
+    .get(getChapterContentByTitleAndNumbers)
+    .put(updateChapterContentByTitleAndNumbers);
 router.route('/:bookTitle/author/about').get(getAuthorContentByTitle);
 
 export default router;
