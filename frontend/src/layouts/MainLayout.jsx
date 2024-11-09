@@ -65,7 +65,7 @@ const MainLayout = () => {
                                     </p>
 
                                     <div
-                                        className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                        className={`transition-max-height duration-300 ease-in-out overflow-auto pl-3 ${
                                             expandedBookId === book._id
                                                 ? 'max-h-screen'
                                                 : 'max-h-0'
@@ -103,7 +103,7 @@ const MainLayout = () => {
                                                 </p>
 
                                                 <div
-                                                    className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                                    className={`transition-max-height duration-300 ease-in-out overflow-auto pl-3 ${
                                                         expandedParts[part._id]
                                                             ? 'max-h-screen'
                                                             : 'max-h-0'
