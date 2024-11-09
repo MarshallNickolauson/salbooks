@@ -55,16 +55,14 @@ const MainLayout = () => {
                         <div>
                             {books.map((book) => (
                                 <div key={book._id}>
-                                    <div className='inline-block'>
-                                        <p
-                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer underline'
-                                            onClick={() =>
-                                                toggleExpandBook(book._id)
-                                            }
-                                        >
-                                            {formattedBookTitle(book.title)}
-                                        </p>
-                                    </div>
+                                    <p
+                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer underline'
+                                        onClick={() =>
+                                            toggleExpandBook(book._id)
+                                        }
+                                    >
+                                        {formattedBookTitle(book.title)}
+                                    </p>
 
                                     <div
                                         className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
@@ -92,10 +90,7 @@ const MainLayout = () => {
                                             Preface
                                         </p>
                                         {book.parts.map((part) => (
-                                            <div
-                                                key={part._id}
-                                                className='inline-block'
-                                            >
+                                            <div key={part._id}>
                                                 <p
                                                     className='py-1 px-3 hover:bg-gray-200 cursor-pointer font-bold'
                                                     onClick={() =>
@@ -116,7 +111,12 @@ const MainLayout = () => {
                                                 >
                                                     <p
                                                         className='py-1 px-3 hover:bg-gray-200 cursor-pointer'
-                                                        onClick={() => partPrefaceNavigate(book.title, part.part)}
+                                                        onClick={() =>
+                                                            partPrefaceNavigate(
+                                                                book.title,
+                                                                part.part
+                                                            )
+                                                        }
                                                     >
                                                         Preface
                                                     </p>
