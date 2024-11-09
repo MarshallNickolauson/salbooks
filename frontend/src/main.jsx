@@ -18,6 +18,7 @@ import IntroductionScreen from './screens/IntroductionScreen.jsx';
 import BookPrefaceScreen from './screens/BookPrefaceScreen.jsx';
 import ChapterContentScreen from './screens/ChapterContentScreen.jsx';
 import PartPrefaceScreen from './screens/PartPrefaceScreen.jsx';
+import LoginScreen from './screens/LoginScreen.jsx';
 
 function App() {
     const router = createBrowserRouter(
@@ -26,6 +27,8 @@ function App() {
                 <Route path='*' element={<NotFoundScreen />} />
                 <Route index element={<HomeScreen />} />
                 <Route path='/example' element={<ExampleScreen />} />
+
+                <Route path='/login' element={<LoginScreen />} />
 
                 <Route path='/books/:bookTitle/introduction' element={<IntroductionScreen />} />
                 <Route path='/books/:bookTitle/preface' element={<BookPrefaceScreen />} />

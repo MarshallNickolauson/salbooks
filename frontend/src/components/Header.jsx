@@ -1,7 +1,26 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useLogoutUserMutation } from '../slices/userApiSlice';
+import { logout } from '../slices/authSlice';
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
+
+    const { userInfo } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+
+    const [logoutUser] = useLogoutUserMutation();
+
+    const handleLogout = async () => {
+        try {
+            const res = await logoutUser().unwrap();
+            dispatch(logout());
+        } catch (error) {
+            console.error('Failed to logout:', error);
+        }
+    };
 
     return (
         <nav className='bg-white shadow-md'>
@@ -62,12 +81,32 @@ function Header() {
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
                             <div className='flex space-x-4'>
-                                <a
-                                    href='#'
+                                <Link
+                                    to='/'
                                     className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
                                 >
                                     Dashboard
-                                </a>
+                                </Link>
+                                {userInfo ? (
+                                    <>
+                                        <Link
+                                            to='/profile'
+                                            className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                        >
+                                            Hi, {userInfo.name}
+                                        </Link>
+                                        <p onClick={handleLogout} className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer'>
+                                            Logout
+                                        </p>
+                                    </>
+                                ) : (
+                                    <Link
+                                        to='/login'
+                                        className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                    >
+                                        Login
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
