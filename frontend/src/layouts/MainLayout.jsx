@@ -1,6 +1,5 @@
 import Header from '../components/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Footer from '../components/Footer';
 import { useGetBooksQuery } from '../slices/bookApiSlice';
 import { useState } from 'react';
 
@@ -27,6 +26,18 @@ const MainLayout = () => {
             ...prevExpandedParts,
             [partId]: !prevExpandedParts[partId],
         }));
+    };
+
+    const bookIntroductionNavigate = (bookTitle) => {
+        navigate(`/books/${bookTitle}/introduction`);
+    };
+
+    const bookPrefaceNavigate = (bookTitle) => {
+        navigate(`/books/${bookTitle}/preface`);
+    };
+
+    const partPrefaceNavigate = (bookTitle, partNumber) => {
+        navigate(`/books/${bookTitle}/${partNumber}/preface`);
     };
 
     const chapterNavigate = (bookTitle, partNumber, chapterNumber) => {
@@ -62,6 +73,24 @@ const MainLayout = () => {
                                                 : 'max-h-0'
                                         }`}
                                     >
+                                        <p
+                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer'
+                                            onClick={() =>
+                                                bookIntroductionNavigate(
+                                                    book.title
+                                                )
+                                            }
+                                        >
+                                            Introduction
+                                        </p>
+                                        <p
+                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer'
+                                            onClick={() =>
+                                                bookPrefaceNavigate(book.title)
+                                            }
+                                        >
+                                            Preface
+                                        </p>
                                         {book.parts.map((part) => (
                                             <div
                                                 key={part._id}
@@ -69,7 +98,11 @@ const MainLayout = () => {
                                             >
                                                 <p
                                                     className='py-1 px-3 hover:bg-gray-200 cursor-pointer font-bold'
-                                                    onClick={() => toggleExpandPart(part._id)}
+                                                    onClick={() =>
+                                                        toggleExpandPart(
+                                                            part._id
+                                                        )
+                                                    }
                                                 >
                                                     {part.title}
                                                 </p>
@@ -81,6 +114,12 @@ const MainLayout = () => {
                                                             : 'max-h-0'
                                                     }`}
                                                 >
+                                                    <p
+                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer'
+                                                        onClick={() => partPrefaceNavigate(book.title, part.part)}
+                                                    >
+                                                        Preface
+                                                    </p>
                                                     {part.chapters.map(
                                                         (chapter) => (
                                                             <p
@@ -111,7 +150,6 @@ const MainLayout = () => {
                 </div>
                 <div className='w-9/12 md:w-9/12'>Content</div>
             </div>
-            <Footer />
         </>
     );
 };
