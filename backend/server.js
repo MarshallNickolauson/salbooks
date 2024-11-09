@@ -7,6 +7,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 const port = process.env.BACKEND_PORT || 5000;
 
+import bookRoutes from './routes/book.routes.js';
+
 connectDB();
 
 const app = express();
@@ -22,7 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.use('/route', importedRoute)
+app.use('/api/books', bookRoutes);
 
 app.use(errorHandler);
 

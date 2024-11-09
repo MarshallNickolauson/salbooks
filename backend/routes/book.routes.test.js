@@ -1,4 +1,30 @@
-const books = [
+import request from 'supertest';
+import express from 'express';
+import mongoose from 'mongoose';
+import bookRoutes from '../routes/book.routes.js';
+import Book from '../models/book.model.js';
+
+const app = express();
+app.use(express.json());
+app.use('/api/books', bookRoutes);
+
+beforeAll(async () => {
+    const url = `mongodb://127.0.0.1:27017/testdb`;
+    await mongoose.connect(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+});
+
+afterEach(async () => {
+    await Book.deleteMany();
+});
+
+afterAll(async () => {
+    await mongoose.connection.close();
+});
+
+const bookData = [
     {
         title: 'journey-through-the-unknown',
         introduction: 'An exploration of mysterious lands and ancient secrets.',
@@ -124,4 +150,64 @@ const books = [
     },
 ];
 
-export default books;
+describe('Book Routes', () => {
+    beforeEach(async () => {
+        await Book.create(bookData);
+    });
+
+    it('should fetch all books', async () => {
+        const res = await request(app).get('/api/books');
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveLength(1);
+    });
+
+    it('should fetch all book details', async () => {
+        const res = await request(app).get('/api/books/all');
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveLength(1);
+    });
+
+    it('should fetch book introduction by book title', async () => {
+        const res = await request(app).get(
+            `/api/books/journey-through-the-unknown/introduction`
+        );
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.introduction).toEqual(bookData[0].introduction);
+    });
+
+    it('should fetch book preface by book title', async () => {
+        const res = await request(app).get(
+            `/api/books/journey-through-the-unknown/preface`
+        );
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.preface).toEqual(bookData[0].preface);
+    });
+
+    bookData[0].parts.forEach((part) => {
+        it(`should fetch part preface by book title and part number ${part.part}`, async () => {
+            const res = await request(app).get(
+                `/api/books/journey-through-the-unknown/parts/${part.part}/preface`
+            );
+            expect(res.statusCode).toEqual(200);
+            expect(res.body.preface).toEqual(part.preface);
+        });
+
+        part.chapters.forEach((chapter, chapterIndex) => {
+            it(`should fetch chapter content by book title, part number ${part.part}, and chapter number ${chapter.chapter}`, async () => {
+                const res = await request(app).get(
+                    `/api/books/journey-through-the-unknown/parts/${part.part}/chapters/${chapter.chapter}/content`
+                );
+                expect(res.statusCode).toEqual(200);
+                expect(res.body.content).toEqual(chapter.content);
+            });
+        });
+    });
+
+    it('should fetch author content by title', async () => {
+        const res = await request(app).get(
+            `/api/books/journey-through-the-unknown/author/about`
+        );
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.aboutAuthor).toEqual(bookData[0].aboutAuthor);
+    });
+});
