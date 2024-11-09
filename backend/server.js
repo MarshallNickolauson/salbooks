@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const port = process.env.BACKEND_PORT || 5000;
 
+import userRoutes from './routes/user.routes.js';
 import bookRoutes from './routes/book.routes.js';
 
 connectDB();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/api/users', userRoutes);
 app.use('/api/books', bookRoutes);
 
 app.use(errorHandler);
