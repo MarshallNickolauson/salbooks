@@ -38,6 +38,18 @@ export const getBookIntroductionByTitle = expressAsyncHandler(
     }
 );
 
+// @desc    Update book introduction by title
+// @route   PUT /api/books/:bookTitle/introduction
+// @access  Private/Admin
+export const updateBookIntroductionByTitle = expressAsyncHandler(async (req, res) => {
+    const book = await Book.findOne({ title: req.params.bookTitle });
+    if (book) {
+        book.introduction = req.body.introduction;
+        const updatedBook = await book.save();
+        res.json(updatedBook);
+    }
+});
+
 // @desc    Fetch book preface by title
 // @route   GET /api/books/:bookTitle/preface
 // @access  Public

@@ -29,6 +29,14 @@ export const bookApiSlice = apiSlice.injectEndpoints({
                 url: `${BOOKS_URL}/${bookTitle}/parts/${partNumber}/chapters/${chapterNumber}/content`,
             }),
         }),
+        updateBookIntroductionByTitle: builder.mutation({
+            query: ({bookTitle, introduction}) => ({
+                url: `${BOOKS_URL}/${bookTitle}/introduction`,
+                method: 'PUT',
+                body: { introduction },
+                credentials: 'include',
+            }),
+        }),
     }),
 });
 
@@ -38,4 +46,5 @@ export const {
     useGetBookPrefaceByTitleQuery,
     useGetPartPrefaceByTitleAndNumberQuery,
     useGetChapterContentByTitleAndPartAndNumberQuery,
+    useUpdateBookIntroductionByTitleMutation,
 } = bookApiSlice;
