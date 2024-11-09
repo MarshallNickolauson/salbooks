@@ -1,6 +1,5 @@
 import { apiSlice } from './apiSlice';
 import { USERS_URL } from '../utils/constants';
-import { logout } from '../../../backend/controllers/user.controller';
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
