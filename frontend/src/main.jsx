@@ -19,6 +19,8 @@ import BookPrefaceScreen from './screens/BookPrefaceScreen.jsx';
 import ChapterContentScreen from './screens/ChapterContentScreen.jsx';
 import PartPrefaceScreen from './screens/PartPrefaceScreen.jsx';
 import LoginScreen from './screens/LoginScreen.jsx';
+import PrivateRoutes from './components/PrivateRoutes';
+import ProfileScreen from './screens/ProfileScreen.jsx';
 
 function App() {
     const router = createBrowserRouter(
@@ -34,6 +36,10 @@ function App() {
                 <Route path='/books/:bookTitle/preface' element={<BookPrefaceScreen />} />
                 <Route path='/books/:bookTitle/:partNumber/preface' element={<PartPrefaceScreen />} />
                 <Route path='/books/:bookTitle/:partNumber/:chapterNumber' element={<ChapterContentScreen />} />
+
+                <Route path='' element={<PrivateRoutes />}>
+                    <Route path='/profile' element={<ProfileScreen />} />
+                </Route>
             </Route>
         )
     );
