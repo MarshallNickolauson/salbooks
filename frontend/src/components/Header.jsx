@@ -79,7 +79,7 @@ function Header() {
                             </h1>
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
-                            <div className='flex flex-row justify-end space-x-1'>
+                            <div className='flex flex-row justify-end'>
                                 {userInfo ? (
                                     <>
                                         <Link
@@ -88,6 +88,14 @@ function Header() {
                                         >
                                             Hi, {userInfo.name}
                                         </Link>
+                                        {userInfo.isAdmin && (
+                                            <Link
+                                                to='/admin'
+                                                className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                            >
+                                                Admin
+                                            </Link>
+                                        )}
                                         <p
                                             onClick={handleLogout}
                                             className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
