@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useLogoutUserMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,7 @@ function Header() {
         try {
             const res = await logoutUser().unwrap();
             dispatch(logout());
+            toast.success("You've been logged out!");
         } catch (error) {
             console.error('Failed to logout:', error);
         }

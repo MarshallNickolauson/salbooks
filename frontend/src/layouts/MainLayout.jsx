@@ -2,6 +2,8 @@ import Header from '../components/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from '../slices/bookApiSlice';
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainLayout = () => {
     const [expandedBookId, setExpandedBookId] = useState(null);
@@ -31,6 +33,7 @@ const MainLayout = () => {
     return (
         <>
             <Header />
+            <ToastContainer />
             {/* Sidebar */}
             <div className='flex h-[90vh] font-roboto'>
                 <div className='w-3/12 md:w-3/12 flex flex-col h-full overflow-hidden bg-gray-100 p-2 shadow-lg'>
