@@ -20,7 +20,9 @@ import ChapterContentScreen from './screens/ChapterContentScreen.jsx';
 import PartPrefaceScreen from './screens/PartPrefaceScreen.jsx';
 import LoginScreen from './screens/LoginScreen.jsx';
 import PrivateRoutes from './components/PrivateRoutes';
+import AdminRoutes from './components/AdminRoutes';
 import ProfileScreen from './screens/ProfileScreen.jsx';
+import AdminScreen from './screens/AdminScreen.jsx';
 
 function App() {
     const router = createBrowserRouter(
@@ -39,6 +41,10 @@ function App() {
 
                 <Route path='' element={<PrivateRoutes />}>
                     <Route path='/profile' element={<ProfileScreen />} />
+                </Route>
+
+                <Route path='' element={<AdminRoutes />}>
+                    <Route path='/admin' element={<AdminScreen />} />
                 </Route>
             </Route>
         )
