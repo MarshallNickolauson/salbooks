@@ -63,7 +63,7 @@ const BookPrefaceScreen = () => {
                 <h1 className='text-2xl font-bold mb-4'>
                     {formattedBookTitle(bookTitle)}
                 </h1>
-                {userInfo.isAdmin && (
+                {userInfo && userInfo.isAdmin && (
                     <div className='ml-auto flex items-center space-x-1'>
                         <button
                             className={`py-2 w-20 text-white bg-gray-400 hover:bg-gray-500 font-bold px-4 rounded ${
@@ -87,7 +87,7 @@ const BookPrefaceScreen = () => {
                 )}
             </div>
 
-            {isEditing && userInfo.isAdmin ? (
+            {isEditing && userInfo && userInfo.isAdmin ? (
                 <ReactQuill
                     className='mt-4'
                     value={prefaceContent}
