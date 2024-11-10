@@ -5,12 +5,15 @@ import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
 import ReactQuill from 'react-quill';
 import Loader from '../components/Loader';
+import { useSelector } from 'react-redux';
 
 const ChapterContentScreen = () => {
     const { bookTitle, partNumber, chapterNumber } = useParams();
 
     const [chapterContent, setChapterContent] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+
+    const {userInfo} = useSelector((state) => state.auth);
 
     const [
         updateChapterContent,
@@ -63,29 +66,31 @@ const ChapterContentScreen = () => {
                 <h1 className='text-2xl font-bold mb-4'>
                     {formattedBookTitle(bookTitle)}
                 </h1>
-                <div className='ml-auto flex items-center space-x-1'>
-                    <button
-                        className={`py-2 w-20 text-white bg-gray-400 hover:bg-gray-500 font-bold px-4 rounded ${
-                            isEditing ? '' : 'hidden'
-                        }`}
-                        onClick={() => setIsEditing(false)}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        className={`py-2 w-20 text-white font-bold px-4 rounded ${
-                            isEditing
-                                ? 'bg-green-500 hover:bg-green-600'
-                                : 'bg-blue-500 hover:bg-blue-600'
-                        }`}
-                        onClick={handleEditButton}
-                    >
-                        {isEditing ? 'Save' : 'Edit'}
-                    </button>
-                </div>
+                {userInfo.isAdmin && (
+                    <div className='ml-auto flex items-center space-x-1'>
+                        <button
+                            className={`py-2 w-20 text-white bg-gray-400 hover:bg-gray-500 font-bold px-4 rounded ${
+                                isEditing ? '' : 'hidden'
+                            }`}
+                            onClick={() => setIsEditing(false)}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className={`py-2 w-20 text-white font-bold px-4 rounded ${
+                                isEditing
+                                    ? 'bg-green-500 hover:bg-green-600'
+                                    : 'bg-blue-500 hover:bg-blue-600'
+                            }`}
+                            onClick={handleEditButton}
+                        >
+                            {isEditing ? 'Save' : 'Edit'}
+                        </button>
+                    </div>
+                )}
             </div>
 
-            {isEditing ? (
+            {isEditing && userInfo.isAdmin ? (
                 <ReactQuill
                     className='mt-4'
                     value={chapterContent}
