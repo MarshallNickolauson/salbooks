@@ -1,16 +1,11 @@
-import {Spinner} from 'react-bootstrap';
+import Spinner from 'react-spinners/ClipLoader'
 
 const Loader = () => {
   return (
     <Spinner 
-        animation='border'
-        role='status'
-        style={{
-            width: "100px",
-            height: "100px",
-            margin: "auto",
-            display: "block"
-        }}
+        size={50}
+        color={"#123abc"}
+        loading={true}
     />
   )
 }

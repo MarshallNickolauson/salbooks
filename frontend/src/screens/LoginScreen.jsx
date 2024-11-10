@@ -29,8 +29,6 @@ const LoginScreen = () => {
         }
     };
 
-    if (isLoading) return <Loader />;
-
     return (
         <div className='flex items-center'>
             <div className='w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md'>
@@ -67,6 +65,9 @@ const LoginScreen = () => {
                             required
                             className='w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                         />
+                    </div>
+                    <div className='flex justify-center'>
+                        {isLoading && <Loader />}
                     </div>
                     <div>
                         <button
