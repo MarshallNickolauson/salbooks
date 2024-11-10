@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
 import ReactQuill from 'react-quill';
+import Loader from '../components/Loader';
 
 const ChapterContentScreen = () => {
     const { bookTitle, partNumber, chapterNumber } = useParams();
@@ -53,7 +54,7 @@ const ChapterContentScreen = () => {
     };
 
     return isChapterContentLoading ? (
-        <p>Loading...</p>
+        <Loader />
     ) : chapterContentError ? (
         <p>Error: {chapterContentError}</p>
     ) : (

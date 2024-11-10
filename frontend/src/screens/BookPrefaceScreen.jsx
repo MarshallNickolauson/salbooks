@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
 import ReactQuill from 'react-quill';
+import Loader from '../components/Loader';
 
 const BookPrefaceScreen = () => {
     const { bookTitle } = useParams();
@@ -50,7 +51,7 @@ const BookPrefaceScreen = () => {
     };
 
     return isPrefaceLoading ? (
-        <p>Loading...</p>
+        <Loader />
     ) : prefaceError ? (
         <p>Error: {prefaceError}</p>
     ) : (

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -27,6 +28,8 @@ const LoginScreen = () => {
             console.error('Failed to login:', error);
         }
     };
+
+    if (isLoading) return <Loader />;
 
     return (
         <div className='flex items-center'>

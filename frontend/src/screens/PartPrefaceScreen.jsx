@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useEffect, useState } from 'react';
 import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
+import Loader from '../components/Loader';
 
 const PartPrefaceScreen = () => {
     const { bookTitle, partNumber } = useParams();
@@ -55,7 +56,7 @@ const PartPrefaceScreen = () => {
     };
 
     return isPartPrefaceLoading ? (
-        <p>Loading...</p>
+        <Loader />
     ) : partPrefaceError ? (
         <p>Error: {partPrefaceError}</p>
     ) : (

@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useEffect, useState } from 'react';
 import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
+import Loader from '../components/Loader';
 
 const IntroductionScreen = () => {
     const { bookTitle } = useParams();
@@ -51,7 +52,7 @@ const IntroductionScreen = () => {
     };
 
     return isIntroductionLoading ? (
-        <p>Loading...</p>
+        <Loader />
     ) : introductionError ? (
         <p>Error: {introductionError}</p>
     ) : (
