@@ -70,7 +70,7 @@ function Header() {
                             )}
                         </button>
                     </div>
-                    <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
+                    <div className='flex-1 flex justify-between'>
                         <div className='flex-shrink-0 flex items-center'>
                             <h1 className='block lg:hidden h-8 w-auto'>
                                 Studies in Abundant Living
@@ -80,13 +80,7 @@ function Header() {
                             </h1>
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
-                            <div className='flex space-x-4'>
-                                <Link
-                                    to='/'
-                                    className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
-                                >
-                                    Dashboard
-                                </Link>
+                            <div className='flex flex-row justify-end space-x-1'>
                                 {userInfo ? (
                                     <>
                                         <Link
@@ -95,7 +89,10 @@ function Header() {
                                         >
                                             Hi, {userInfo.name}
                                         </Link>
-                                        <p onClick={handleLogout} className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer'>
+                                        <p
+                                            onClick={handleLogout}
+                                            className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
+                                        >
                                             Logout
                                         </p>
                                     </>
