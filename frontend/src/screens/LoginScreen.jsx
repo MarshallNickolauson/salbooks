@@ -3,6 +3,7 @@ import { useLoginUserMutation } from '../slices/userApiSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -18,6 +19,9 @@ const LoginScreen = () => {
         try {
             const res = await loginUser({ email, password }).unwrap();
             dispatch(setCredentials({ ...res }));
+            toast.success(`Welcome back, ${res.name}`);
+            setEmail('');
+            setPassword('');
             navigate('/');
         } catch (error) {
             console.error('Failed to login:', error);
