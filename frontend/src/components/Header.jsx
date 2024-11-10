@@ -72,12 +72,9 @@ function Header() {
                             )}
                         </button>
                     </div>
-                    <div className='flex-1 flex justify-between'>
+                    <div className='flex-1 flex justify-center sm:justify-between'>
                         <div className='flex-shrink-0 flex items-center'>
-                            <h1 className='block lg:hidden h-8 w-auto'>
-                                Studies in Abundant Living
-                            </h1>
-                            <h1 className='hidden lg:block h-8 w-auto'>
+                            <h1 className='w-auto'>
                                 Studies in Abundant Living
                             </h1>
                         </div>
