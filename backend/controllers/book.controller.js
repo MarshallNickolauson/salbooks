@@ -18,8 +18,18 @@ export const getBookById = expressAsyncHandler(async (req, res) => {
 // @route   POST /api/books
 // @access  Private/Admin
 export const createBook = expressAsyncHandler(async (req, res) => {
+    const book = new Book({
+        title: req.body.title,
+        introduction: req.body.introduction,
+        preface: req.body.preface,
+        parts: req.body.parts,
+        aboutAuthor: req.body.aboutAuthor,
+        color: req.body.color,
+    });
 
-});
+    const createdBook = await book.save();
+    res.status(201).json(createdBook);
+}); 
 
 // @desc    Update a book
 // @route   PUT /api/books/:id

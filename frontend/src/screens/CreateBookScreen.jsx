@@ -1,16 +1,34 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FaPlus, FaTrash } from 'react-icons/fa';
+import reverseFormattedBookTitle from '../utils/reverseFormatBookTitle';
+import { useCreateBookMutation } from '../slices/bookApiSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CreateBookScreen = () => {
+    const [createBook, { isLoading }] = useCreateBookMutation();
+
+    const navigate = useNavigate();
+
     const [book, setBook] = useState({
         title: '',
-        introduction: '',
-        preface: '',
+        introduction: 'Text Here',
+        preface: 'Text Here',
         parts: [],
-        aboutAuthor: '',
+        aboutAuthor: 'Text Here',
         color: '#00FFFF',
     });
+
+    const resetBookState = () => {
+        setBook({
+            title: '',
+            introduction: '',
+            preface: '',
+            parts: [],
+            aboutAuthor: '',
+            color: '#00FFFF',
+        });
+    };
 
     const handleAddPart = () => {
         setBook((prevBook) => ({
@@ -20,7 +38,7 @@ const CreateBookScreen = () => {
                 {
                     part: prevBook.parts.length + 1,
                     title: '',
-                    preface: '',
+                    preface: 'Text Here',
                     chapters: [],
                 },
             ],
@@ -44,7 +62,7 @@ const CreateBookScreen = () => {
                     {
                         chapter: updatedParts[partIndex].chapters.length + 1,
                         title: '',
-                        content: '',
+                        content: 'Text Here',
                     },
                 ],
             };
@@ -88,12 +106,19 @@ const CreateBookScreen = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Reverse format book title
-        
-        console.log('Book data:', book);
-        toast.success('Book data logged in the console');
+
+        book.title = reverseFormattedBookTitle(book.title);
+
+        try {
+            await createBook(book).unwrap();
+            toast.success('Book created successfully');
+            navigate('/admin/books');
+        } catch (error) {
+            console.log(error);
+            toast.error(`${error.data.message}`);
+        }
     };
 
     return (
@@ -231,7 +256,7 @@ const CreateBookScreen = () => {
                             type='submit'
                             className='w-full px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                         >
-                            Submit
+                            Create Book
                         </button>
                     </div>
                 </form>
