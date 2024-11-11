@@ -1,6 +1,33 @@
 import expressAsyncHandler from 'express-async-handler';
 import Book from '../models/book.model.js';
 
+// @desc    Fetch single book by id
+// @route   GET /api/books/:id
+// @access  Public
+export const getBookById = expressAsyncHandler(async (req, res) => {
+    const book = await Book.findById(req.params.id);
+    if (book) {
+        res.json(book);
+    } else {
+        res.status(404);
+        throw new Error('Book not found');
+    }
+});
+
+// @desc    Create a book
+// @route   POST /api/books
+// @access  Private/Admin
+export const createBook = expressAsyncHandler(async (req, res) => {
+
+});
+
+// @desc    Update a book
+// @route   PUT /api/books/:id
+// @access  Private/Admin
+export const updateBook = expressAsyncHandler(async (req, res) => {
+
+});
+
 // @desc    Fetch books (custom response)
 // @route   GET /api/books
 // @access  Public
