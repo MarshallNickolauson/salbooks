@@ -41,6 +41,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 credentials: 'include',
             }),
         }),
+        createUser: builder.mutation({
+            query: (newUser) => ({
+                url: `${USERS_URL}/create`,
+                method: 'POST',
+                body: newUser,
+                credentials: 'include',
+            }),
+        }),
         getAllUsers: builder.query({
             query: () => ({
                 url: `${USERS_URL}`,
@@ -79,6 +87,7 @@ export const {
     useRegisterUserMutation,
     useGetUserProfileQuery,
     useUpdateUserProfileMutation,
+    useCreateUserMutation,
     useGetAllUsersQuery,
     useGetUserByIdQuery,
     useUpdateUserByIdMutation,

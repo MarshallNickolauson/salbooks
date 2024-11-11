@@ -18,12 +18,18 @@ const UsersListScreen = () => {
                 <div className='text-3xl font-semibold text-gray-800 mb-6'>
                     Users List
                 </div>
-                <div>
+                <div className='space-x-2'>
                     <button
                         className={`py-2 w-24 text-gray-800 bg-gray-300 hover:bg-gray-400 font-bold px-4 rounded`}
                         onClick={() => navigate('/admin')}
                     >
                         Go Back
+                    </button>
+                    <button
+                        className={`py-2 w-32 text-white bg-indigo-600 hover:bg-indigo-700 font-bold px-4 rounded`}
+                        onClick={() => navigate('/admin/users/create')}
+                    >
+                        Create User
                     </button>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import express from 'express';
 import { protect, admin } from '../middleware/authMiddleware.js';
 import {
     authUser,
+    createUser,
     deleteUser,
     getUserById,
     getUserProfile,
@@ -20,6 +21,7 @@ router
     .route('/profile')
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile);
+router.route('/create').post(protect, admin, createUser);
 router
     .route('/:id')
     .get(protect, admin, getUserById)
