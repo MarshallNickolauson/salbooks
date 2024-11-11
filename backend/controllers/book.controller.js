@@ -35,7 +35,36 @@ export const createBook = expressAsyncHandler(async (req, res) => {
 // @route   PUT /api/books/:id
 // @access  Private/Admin
 export const updateBook = expressAsyncHandler(async (req, res) => {
+    const book = await Book.findById(req.params.id);
+    
+    if (book) {
+        book.title = req.body.title || book.title;
+        book.introduction = req.body.introduction || book.introduction;
+        book.preface = req.body.preface || book.preface;
+        book.parts = req.body.parts || book.parts;
+        book.aboutAuthor = req.body.aboutAuthor || book.aboutAuthor;
+        book.color = req.body.color || book.color;
 
+        const updatedBook = await book.save();
+        res.json(updatedBook);
+    } else {
+        res.status(404);
+        throw new Error('Book not found');
+    }
+});
+
+// @desc    Delete a book
+// @route   DELETE /api/books/:id
+// @access  Private/Admin
+export const deleteBook = expressAsyncHandler(async (req, res) => {
+    const book = await Book.findById(req.params.id);
+    if (book) {
+        await book.remove();
+        res.json({ message: `Book '${book.title}' removed` });
+    } else {
+        res.status(404);
+        throw new Error('Book not found');
+    }
 });
 
 // @desc    Fetch books (custom response)
