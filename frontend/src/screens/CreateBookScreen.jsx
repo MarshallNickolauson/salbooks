@@ -259,6 +259,15 @@ const CreateBookScreen = () => {
                             Create Book
                         </button>
                     </div>
+                    <div>
+                        <button
+                            type='button'
+                            className='w-full px-4 py-2 text-gray-800 bg-gray-300 hover:bg-gray-400 rounded-md focus:outline-none'
+                            onClick={() => navigate('/admin/books')}
+                        >
+                            Go Back
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
