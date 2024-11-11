@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useGetBooksQuery } from '../slices/bookApiSlice';
 import { useNavigate } from 'react-router-dom';
 import formattedBookTitle from '../utils/formatBookTitle';
+import Loader from '../components/Loader';
 
 const BooksListScreen = () => {
     const { data: books, isLoading, refetch } = useGetBooksQuery();
