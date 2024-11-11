@@ -1,11 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useGetAllUsersQuery } from '../slices/userApiSlice';
 import Loader from '../components/Loader';
+import { useEffect } from 'react';
 
 const UsersListScreen = () => {
-    const { data: users, isLoading } = useGetAllUsersQuery();
+    const { data: users, isLoading, refetch } = useGetAllUsersQuery();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     return (
         <div className='p-6 bg-gray-50 min-h-screen'>
