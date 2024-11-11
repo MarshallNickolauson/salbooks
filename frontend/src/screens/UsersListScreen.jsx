@@ -9,8 +9,18 @@ const UsersListScreen = () => {
 
     return (
         <div className='p-6 bg-gray-50 min-h-screen'>
-            <div className='text-3xl font-semibold text-gray-800 mb-6'>
-                Users List
+            <div className='flex flex-row justify-between'>
+                <div className='text-3xl font-semibold text-gray-800 mb-6'>
+                    Users List
+                </div>
+                <div>
+                    <button
+                        className={`py-2 w-24 text-gray-800 bg-gray-300 hover:bg-gray-400 font-bold px-4 rounded`}
+                        onClick={() => navigate('/admin')}
+                    >
+                        Go Back
+                    </button>
+                </div>
             </div>
             <div className='flex flex-col space-y-2'>
                 {isLoading ? (
