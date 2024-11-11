@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from '../slices/bookApiSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,7 +11,11 @@ const MainLayout = () => {
 
     const navigate = useNavigate();
 
-    const { data: books, error, isLoading } = useGetBooksQuery();
+    const { data: books, error, isLoading, refetch } = useGetBooksQuery();
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     const formattedBookTitle = (title) => {
         return title
