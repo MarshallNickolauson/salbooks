@@ -27,6 +27,7 @@ import UsersListScreen from './screens/UsersListScreen.jsx';
 import SingleUserScreen from './screens/SingleUserScreen.jsx';
 import BooksListScreen from './screens/BooksListScreen.jsx';
 import CreateUserScreen from './screens/CreateUserScreen.jsx';
+import CreateBookScreen from './screens/CreateBookScreen.jsx';
 
 function App() {
     const router = createBrowserRouter(
@@ -53,6 +54,7 @@ function App() {
                     <Route path='/admin/users/create' element={<CreateUserScreen />} />
                     <Route path='/admin/users/:id' element={<SingleUserScreen />} />
                     <Route path='/admin/books' element={<BooksListScreen />} />
+                    <Route path='/admin/books/create' element={<CreateBookScreen />} />
                 </Route>
             </Route>
         )
