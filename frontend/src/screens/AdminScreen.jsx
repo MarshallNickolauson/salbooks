@@ -16,7 +16,7 @@ const AdminScreen = () => {
                 {Object.values(panelSelection).map((panel) => (
                     <div
                         key={panel}
-                        className='bg-white shadow-sm border border-gray-200 rounded-lg p-5 hover:cursor-pointer transition-transform duration-150 hover:scale-[1.02]'
+                        className='bg-white shadow-sm border border-gray-200 rounded-lg p-4 hover:cursor-pointer transition-transform duration-150 hover:scale-[1.02]'
                         onClick={() => navigate(`/admin/${panel.toLowerCase()}s`)}
                     >
                         <p className='text-lg text-gray-900 font-medium'>Manage {panel}s</p>
