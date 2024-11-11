@@ -3,6 +3,28 @@ import { BOOKS_URL } from '../utils/constants';
 
 export const bookApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getBookById: builder.query({
+            query: (id) => ({
+                url: `${BOOKS_URL}/${id}`,
+                credentials: 'include',
+            }),
+        }),
+        createBook: builder.mutation({
+            query: (book) => ({
+                url: BOOKS_URL,
+                method: 'POST',
+                body: book,
+                credentials: 'include',
+            }),
+        }),
+        updateBook: builder.mutation({
+            query: ({id, book}) => ({
+                url: `${BOOKS_URL}/${id}`,
+                method: 'PUT',
+                body: book,
+                credentials: 'include',
+            }),
+        }),
         getBooks: builder.query({
             query: () => ({
                 url: BOOKS_URL,
@@ -69,6 +91,9 @@ export const bookApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useGetBookByIdQuery,
+    useCreateBookMutation,
+    useUpdateBookMutation,
     useGetBooksQuery,
     useGetBookIntroductionByTitleQuery,
     useGetBookPrefaceByTitleQuery,
