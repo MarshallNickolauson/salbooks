@@ -74,9 +74,12 @@ function Header() {
                     </div>
                     <div className='flex-1 flex justify-center sm:justify-between'>
                         <div className='flex-shrink-0 flex items-center'>
-                            <h1 className='w-auto'>
+                            <Link
+                                to='/'
+                                className='text-gray-900 tracking-wide rounded-md text-md font-bold'
+                            >
                                 Studies in Abundant Living
-                            </h1>
+                            </Link>
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
                             <div className='flex flex-row justify-end'>
