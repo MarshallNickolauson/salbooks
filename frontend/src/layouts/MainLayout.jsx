@@ -47,7 +47,7 @@ const MainLayout = () => {
             <ToastContainer />
             {/* Sidebar */}
             <div className='flex h-[90vh] font-roboto bg-mainBluishWhite'>
-                <div className='w-3/12 md:w-3/12 flex flex-col h-full overflow-hidden p-2 shadow-lg'>
+                <div className='w-[300px] flex flex-col h-full overflow-hidden py-3 pr-3 shadow-lg'>
                     <div className='flex-1 overflow-y-auto'>
                         {isLoading ? (
                             <p>Loading...</p>
@@ -61,7 +61,10 @@ const MainLayout = () => {
                                                 className='mb-2'
                                             >
                                                 <div
-                                                    className={`flex items-center justify-between py-1 px-3 bg-white rounded-lg border-2 border-[${book.color}] cursor-pointer hover:bg-gray-200 transition`}
+                                                    className={`flex items-center justify-between py-1 px-3 bg-white rounded-r-lg border-r-2 border-t-2 border-b-2 cursor-pointer hover:bg-gray-200 transition`}
+                                                    style={{
+                                                        borderColor: book.color,
+                                                    }}
                                                     onClick={() =>
                                                         toggleExpandBook(
                                                             book._id
@@ -101,7 +104,7 @@ const MainLayout = () => {
                                                     }`}
                                                 >
                                                     <p
-                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-lg'
+                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-lg'
                                                         onClick={() =>
                                                             navigate(
                                                                 `/books/${book.title}/introduction`
@@ -111,7 +114,7 @@ const MainLayout = () => {
                                                         Introduction
                                                     </p>
                                                     <p
-                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-lg'
+                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-lg'
                                                         onClick={() =>
                                                             navigate(
                                                                 `/books/${book.title}/preface`
@@ -212,7 +215,7 @@ const MainLayout = () => {
                 </div>
 
                 {/* Main content area */}
-                <div className='flex-1 overflow-y-auto bg-white rounded-2xl mr-8'>
+                <div className='flex-1 overflow-y-auto bg-white rounded-2xl mr-6'>
                     <Outlet />
                 </div>
             </div>
