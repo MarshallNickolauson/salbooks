@@ -24,9 +24,6 @@ function Header() {
         }
     };
 
-    // Side and navbar #F6F8FC
-    // White center #FFFFFF
-
     return (
         <nav className='bg-mainBluishWhite'>
             <div className='w-full px-2 sm:px-6 lg:px-8'>
@@ -83,6 +80,12 @@ function Header() {
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
                             <div className='flex flex-row justify-end'>
+                                <Link
+                                    to='/'
+                                    className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                >
+                                    Dashboard
+                                </Link>
                                 {userInfo ? (
                                     <>
                                         <Link
