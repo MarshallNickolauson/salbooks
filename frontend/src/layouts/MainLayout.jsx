@@ -30,8 +30,8 @@ const MainLayout = () => {
                 setExpandedBookId(matchedBook._id);
                 const partNumber = location.pathname.split('/')[3];
                 if (partNumber) {
-                    const matchedPart = matchedBook.parts.find((part) =>
-                        part.part === parseInt(partNumber)
+                    const matchedPart = matchedBook.parts.find(
+                        (part) => part.part === parseInt(partNumber)
                     );
                     if (matchedPart) {
                         setExpandedParts((prevExpandedParts) => ({
@@ -57,6 +57,11 @@ const MainLayout = () => {
             ...prevExpandedParts,
             [partId]: !prevExpandedParts[partId],
         }));
+    };
+
+    const isActive = (path) => {
+        const currentPath = location.pathname;
+        return currentPath.includes(path);
     };
 
     const sortedBooks = books
@@ -127,7 +132,13 @@ const MainLayout = () => {
                                             }`}
                                         >
                                             <p
-                                                className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
+                                                className={`py-1 px-3 cursor-pointer rounded-r-full transition-all duration-150 ${
+                                                    isActive(
+                                                        `/books/${book.title}/introduction`
+                                                    )
+                                                        ? 'bg-blue-200 hover:bg-none'
+                                                        : 'hover:bg-gray-200'
+                                                }`}
                                                 onClick={() =>
                                                     navigate(
                                                         `/books/${book.title}/introduction`
@@ -137,7 +148,13 @@ const MainLayout = () => {
                                                 Introduction
                                             </p>
                                             <p
-                                                className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
+                                                className={`py-1 px-3 cursor-pointer rounded-r-full transition-all duration-150 ${
+                                                    isActive(
+                                                        `/books/${book.title}/preface`
+                                                    )
+                                                        ? 'bg-blue-200 hover:bg-none'
+                                                        : 'hover:bg-gray-200'
+                                                }`}
                                                 onClick={() =>
                                                     navigate(
                                                         `/books/${book.title}/preface`
@@ -152,7 +169,7 @@ const MainLayout = () => {
                                                     className='pl-3'
                                                 >
                                                     <div
-                                                        className='flex items-center justify-between py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
+                                                        className='flex items-center justify-between py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full transition-all duration-150'
                                                         onClick={() =>
                                                             toggleExpandPart(
                                                                 part._id
@@ -193,7 +210,13 @@ const MainLayout = () => {
                                                         }`}
                                                     >
                                                         <p
-                                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
+                                                            className={`py-1 px-3 cursor-pointer rounded-full transition-all duration-150 ${
+                                                                isActive(
+                                                                    `/books/${book.title}/${part.part}/preface`
+                                                                )
+                                                                    ? 'bg-blue-200 hover:bg-none'
+                                                                    : 'hover:bg-gray-200'
+                                                            }`}
                                                             onClick={() =>
                                                                 navigate(
                                                                     `/books/${book.title}/${part.part}/preface`
@@ -208,7 +231,13 @@ const MainLayout = () => {
                                                                     key={
                                                                         chapter._id
                                                                     }
-                                                                    className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
+                                                                    className={`py-1 px-3 cursor-pointer rounded-full transition-all duration-150 ${
+                                                                        isActive(
+                                                                            `/books/${book.title}/${part.part}/${chapter.chapter}`
+                                                                        )
+                                                                            ? 'bg-blue-200 hover:bg-none'
+                                                                            : 'hover:bg-gray-200'
+                                                                    }`}
                                                                     onClick={() =>
                                                                         navigate(
                                                                             `/books/${book.title}/${part.part}/${chapter.chapter}`
