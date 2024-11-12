@@ -10,6 +10,7 @@ import hexToRgba from '../utils/hexToRgba';
 const MainLayout = () => {
     const [expandedBookId, setExpandedBookId] = useState(null);
     const [expandedParts, setExpandedParts] = useState({});
+    const [currentColor, setCurrentColor] = useState('#000000');
 
     const navigate = useNavigate();
 
@@ -64,6 +65,16 @@ const MainLayout = () => {
         return currentPath.includes(path);
     };
 
+    useEffect(() => {
+        const bookTitle = location.pathname.split('/')[2];
+        if (bookTitle && books) {
+            const matchedBook = books.find((book) => book.title === bookTitle);
+            if (matchedBook && expandedBookId === matchedBook._id) {
+                setCurrentColor(matchedBook.color);
+            }
+        }
+    }, [location, books, expandedBookId]);
+
     const sortedBooks = books
         ? [...books].sort((a, b) => {
               if (a.volume && b.volume) {
@@ -97,9 +108,9 @@ const MainLayout = () => {
                                                         : 0.25
                                                 ),
                                             }}
-                                            onClick={() =>
-                                                toggleExpandBook(book._id)
-                                            }
+                                            onClick={() => {
+                                                toggleExpandBook(book._id);
+                                            }}
                                         >
                                             <span>
                                                 {formattedBookTitle(book.title)}
@@ -262,7 +273,13 @@ const MainLayout = () => {
                 </div>
 
                 {/* Main content area */}
-                <div className='flex-1 overflow-y-auto bg-white rounded-2xl mr-6'>
+                <div
+                    className='flex-1 overflow-y-auto bg-white rounded-2xl mr-6 border'
+                    style={{
+                        borderColor: hexToRgba(currentColor, 1),
+                    }}
+                >
+                    {console.log('currentColor', currentColor)}
                     <Outlet />
                 </div>
             </div>
