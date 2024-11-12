@@ -34,6 +34,13 @@ const MainLayout = () => {
         }));
     };
 
+    const sortedBooks = books ? [...books].sort((a, b) => {
+        if (a.volume && b.volume) {
+            return a.volume - b.volume;
+        }
+        return 0;
+    }) : [];
+
     return (
         <>
             <Header />
@@ -46,7 +53,7 @@ const MainLayout = () => {
                             <p>Loading...</p>
                         ) : (
                             <div>
-                                {books.map(
+                                {sortedBooks.map(
                                     (book) => (
                                         (
                                             <div

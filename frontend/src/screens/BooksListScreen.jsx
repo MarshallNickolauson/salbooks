@@ -13,6 +13,13 @@ const BooksListScreen = () => {
         refetch();
     }, [refetch]);
 
+    const sortedBooks = books ? [...books].sort((a, b) => {
+        if (a.volume && b.volume) {
+            return a.volume - b.volume;
+        }
+        return 0;
+    }) : [];
+
     return (
         <div className='p-6 bg-gray-50 min-h-screen'>
             <div className='flex flex-row justify-between'>
@@ -39,7 +46,7 @@ const BooksListScreen = () => {
                     <Loader />
                 ) : (
                     <>
-                        {books.map((book) => (
+                        {sortedBooks.map((book) => (
                             <div
                                 key={book._id}
                                 className='bg-white shadow-sm border border-gray-200 rounded-lg p-4 hover:cursor-pointer transition-transform duration-150 hover:scale-[1.02]'
