@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useGetBooksQuery } from '../slices/bookApiSlice';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -13,7 +13,25 @@ const MainLayout = () => {
 
     const navigate = useNavigate();
 
+    const location = useLocation();
+
     const { data: books, error, isLoading, refetch } = useGetBooksQuery();
+
+    const getPathBookName = () => {
+        const pathParts = location.pathname.split('/');
+        return pathParts.length > 2 ? pathParts[2] : null;
+    };
+
+    useEffect(() => {
+        const bookTitle = getPathBookName();
+        console.log(bookTitle);
+        if (bookTitle && books) {
+            const matchedBook = books.find(book => book.title === bookTitle);
+            if (matchedBook) {
+                setExpandedBookId(matchedBook._id);
+            }
+        }
+    }, [location, books]);
 
     useEffect(() => {
         refetch();
