@@ -16,6 +16,7 @@ const partSchema = mongoose.Schema({
 const bookSchema = mongoose.Schema(
     {
         title: { type: String, required: true },
+        volume: { type: Number, required: true },
         introduction: { type: String },
         preface: { type: String },
         parts: [partSchema],

@@ -10,6 +10,7 @@ export const getBookById = expressAsyncHandler(async (req, res) => {
         res.json({
             _id: book._id,
             title: book.title,
+            volume: book.volume,
             introduction: book.introduction,
             preface: book.preface,
             parts: book.parts,
@@ -46,6 +47,7 @@ export const updateBook = expressAsyncHandler(async (req, res) => {
     const book = await Book.findById(req.params.id);
     
     if (book) {
+        book.volume = req.body.volume || book.volume;
         book.title = req.body.title || book.title;
         book.introduction = req.body.introduction || book.introduction;
         book.preface = req.body.preface || book.preface;

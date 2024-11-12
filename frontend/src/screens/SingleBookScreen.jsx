@@ -26,12 +26,14 @@ const SingleBookScreen = () => {
 
     const [updateBook, { isLoading }] = useUpdateBookMutation();
 
-    const [deleteBookById, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
+    const [deleteBookById, { isLoading: isDeleting }] =
+        useDeleteBookByIdMutation();
 
     const navigate = useNavigate();
 
     const [book, setBook] = useState({
         _id: bookId,
+        volume: 0,
         title: '',
         parts: [],
         aboutAuthor: '',
@@ -42,6 +44,7 @@ const SingleBookScreen = () => {
         if (bookData) {
             setBook({
                 title: bookData.title,
+                volume: bookData.volume,
                 parts: bookData.parts,
                 aboutAuthor: bookData.aboutAuthor,
                 color: bookData.color,
@@ -159,6 +162,28 @@ const SingleBookScreen = () => {
                             id='title'
                             value={formattedBookTitle(book.title)}
                             onChange={(e) => handleInputChange(e, 'title')}
+                            required
+                            className='w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='volume'
+                            className='block text-sm font-medium text-gray-700'
+                        >
+                            Book Volume #:
+                        </label>
+                        <input
+                            type='number'
+                            id='volume'
+                            value={book.volume}
+                            onChange={(e) => {
+                                const newVolume = Number(e.target.value);
+                                setBook((prevBook) => ({
+                                    ...prevBook,
+                                    volume: newVolume,
+                                }));
+                            }}
                             required
                             className='w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                         />
