@@ -88,12 +88,12 @@ const MainLayout = () => {
                                 {sortedBooks.map((book) => (
                                     <div key={book._id} className='mb-2'>
                                         <div
-                                            className={`flex items-center justify-between py-1 px-3 bg-transparent rounded-r-full border-r-2 border-t-2 border-b-2 cursor-pointer hover:bg-slate-50 transition`}
+                                            className={`flex items-center justify-between py-1 px-3 bg-transparent rounded-r-full border-r border-t border-b cursor-pointer hover:bg-slate-200 transition`}
                                             style={{
                                                 borderColor: hexToRgba(
                                                     book.color,
                                                     expandedBookId === book._id
-                                                        ? 0.5
+                                                        ? 1
                                                         : 0.25
                                                 ),
                                             }}
