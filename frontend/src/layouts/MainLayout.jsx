@@ -4,6 +4,7 @@ import { useGetBooksQuery } from '../slices/bookApiSlice';
 import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import formattedBookTitle from '../utils/formatBookTitle';
 
 const MainLayout = () => {
     const [expandedBookId, setExpandedBookId] = useState(null);
@@ -16,12 +17,6 @@ const MainLayout = () => {
     useEffect(() => {
         refetch();
     }, [refetch]);
-
-    const formattedBookTitle = (title) => {
-        return title
-            .replace(/-/g, ' ')
-            .replace(/\b\w/g, (l) => l.toUpperCase());
-    };
 
     const toggleExpandBook = (bookId) => {
         setExpandedBookId(bookId === expandedBookId ? null : bookId);
