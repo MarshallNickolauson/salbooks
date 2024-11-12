@@ -137,7 +137,7 @@ const MainLayout = () => {
                                                         `/books/${book.title}/introduction`
                                                     )
                                                         ? 'bg-blue-200 hover:bg-none'
-                                                        : 'hover:bg-gray-200'
+                                                        : 'hover:bg-slate-200'
                                                 }`}
                                                 onClick={() =>
                                                     navigate(
@@ -153,7 +153,7 @@ const MainLayout = () => {
                                                         `/books/${book.title}/preface`
                                                     )
                                                         ? 'bg-blue-200 hover:bg-none'
-                                                        : 'hover:bg-gray-200'
+                                                        : 'hover:bg-slate-200'
                                                 }`}
                                                 onClick={() =>
                                                     navigate(
@@ -169,7 +169,7 @@ const MainLayout = () => {
                                                     className='pl-3'
                                                 >
                                                     <div
-                                                        className='flex items-center justify-between py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full transition-all duration-150'
+                                                        className='flex items-center justify-between py-1 px-3 hover:bg-slate-200 cursor-pointer rounded-full transition-all duration-150'
                                                         onClick={() =>
                                                             toggleExpandPart(
                                                                 part._id
@@ -215,7 +215,7 @@ const MainLayout = () => {
                                                                     `/books/${book.title}/${part.part}/preface`
                                                                 )
                                                                     ? 'bg-blue-200 hover:bg-none'
-                                                                    : 'hover:bg-gray-200'
+                                                                    : 'hover:bg-slate-200'
                                                             }`}
                                                             onClick={() =>
                                                                 navigate(
@@ -236,7 +236,7 @@ const MainLayout = () => {
                                                                             `/books/${book.title}/${part.part}/${chapter.chapter}`
                                                                         )
                                                                             ? 'bg-blue-200 hover:bg-none'
-                                                                            : 'hover:bg-gray-200'
+                                                                            : 'hover:bg-slate-200'
                                                                     }`}
                                                                     onClick={() =>
                                                                         navigate(
