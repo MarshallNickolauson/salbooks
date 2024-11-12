@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import formattedBookTitle from '../utils/formatBookTitle';
+import hexToRgba from '../utils/hexToRgba';
 
 const MainLayout = () => {
     const [expandedBookId, setExpandedBookId] = useState(null);
@@ -58,7 +59,7 @@ const MainLayout = () => {
                                                 <div
                                                     className={`flex items-center justify-between py-1 px-3 bg-white rounded-r-lg border-r-2 border-t-2 border-b-2 cursor-pointer hover:bg-gray-200 transition`}
                                                     style={{
-                                                        borderColor: book.color,
+                                                        borderColor: hexToRgba(book.color, expandedBookId === book._id ? 0.5 : 0.25),
                                                     }}
                                                     onClick={() =>
                                                         toggleExpandBook(
