@@ -13,22 +13,12 @@ const CreateBookScreen = () => {
     const [book, setBook] = useState({
         title: '',
         introduction: 'Text Here',
+        volume: 0,
         preface: 'Text Here',
         parts: [],
         aboutAuthor: 'Text Here',
         color: '#00FFFF',
     });
-
-    const resetBookState = () => {
-        setBook({
-            title: '',
-            introduction: '',
-            preface: '',
-            parts: [],
-            aboutAuthor: '',
-            color: '#00FFFF',
-        });
-    };
 
     const handleAddPart = () => {
         setBook((prevBook) => ({
@@ -112,7 +102,7 @@ const CreateBookScreen = () => {
         book.title = reverseFormattedBookTitle(book.title);
 
         try {
-            await createBook(book).unwrap();
+            const res = await createBook(book).unwrap();
             toast.success('Book created successfully');
             navigate('/admin/books');
         } catch (error) {
@@ -138,6 +128,28 @@ const CreateBookScreen = () => {
                             id='title'
                             value={book.title}
                             onChange={(e) => handleInputChange(e, 'title')}
+                            required
+                            className='w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor='volume'
+                            className='block text-sm font-medium text-gray-700'
+                        >
+                            Book Volume #:
+                        </label>
+                        <input
+                            type='number'
+                            id='volume'
+                            value={book.volume}
+                            onChange={(e) => {
+                                const newVolume = Number(e.target.value);
+                                setBook((prevBook) => ({
+                                    ...prevBook,
+                                    volume: newVolume,
+                                }));
+                            }}
                             required
                             className='w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                         />

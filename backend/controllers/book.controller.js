@@ -29,6 +29,7 @@ export const getBookById = expressAsyncHandler(async (req, res) => {
 export const createBook = expressAsyncHandler(async (req, res) => {
     const book = new Book({
         title: req.body.title,
+        volume: req.body.volume,
         introduction: req.body.introduction,
         preface: req.body.preface,
         parts: req.body.parts,
