@@ -279,7 +279,6 @@ const MainLayout = () => {
                         borderColor: hexToRgba(currentColor, 1),
                     }}
                 >
-                    {console.log('currentColor', currentColor)}
                     <Outlet />
                 </div>
             </div>
