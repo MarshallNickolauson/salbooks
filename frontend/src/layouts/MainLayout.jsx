@@ -69,9 +69,7 @@ const MainLayout = () => {
                                                     }
                                                 >
                                                     <span>
-                                                        {formattedBookTitle(
-                                                            book.title
-                                                        )}
+                                                        {formattedBookTitle(book.title)}
                                                     </span>
                                                     <svg
                                                         className={`w-5 h-5 transform transition-transform ${
