@@ -292,8 +292,7 @@ const SingleBookScreen = () => {
                                         'Are you sure you want to delete this book?'
                                     )
                                 ) {
-                                    const res = await deleteBookById(bookId).unwrap();
-                                    console.log(res);
+                                    await deleteBookById(bookId).unwrap();
                                     navigate('/admin/books');
                                 }
                             }}
