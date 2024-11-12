@@ -46,8 +46,8 @@ const MainLayout = () => {
             <Header />
             <ToastContainer />
             {/* Sidebar */}
-            <div className='flex h-[90vh] font-roboto'>
-                <div className='w-3/12 md:w-3/12 flex flex-col h-full overflow-hidden bg-gray-100 p-2 shadow-lg'>
+            <div className='flex h-[90vh] font-roboto bg-mainBluishWhite'>
+                <div className='w-3/12 md:w-3/12 flex flex-col h-full overflow-hidden p-2 shadow-lg'>
                     <div className='flex-1 overflow-y-auto'>
                         {isLoading ? (
                             <p>Loading...</p>
@@ -212,7 +212,7 @@ const MainLayout = () => {
                 </div>
 
                 {/* Main content area */}
-                <div className='flex-1 overflow-y-auto p-4'>
+                <div className='flex-1 overflow-y-auto bg-white rounded-2xl mr-8'>
                     <Outlet />
                 </div>
             </div>

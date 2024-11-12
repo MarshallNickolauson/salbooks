@@ -24,8 +24,11 @@ function Header() {
         }
     };
 
+    // Side and navbar #F6F8FC
+    // White center #FFFFFF
+
     return (
-        <nav className='bg-white shadow-md'>
+        <nav className='bg-mainBluishWhite'>
             <div className='w-full px-2 sm:px-6 lg:px-8'>
                 <div className='relative flex items-center justify-between h-16'>
                     <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
