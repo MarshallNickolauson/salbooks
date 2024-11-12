@@ -24,11 +24,22 @@ const MainLayout = () => {
 
     useEffect(() => {
         const bookTitle = getPathBookName();
-        console.log(bookTitle);
         if (bookTitle && books) {
-            const matchedBook = books.find(book => book.title === bookTitle);
+            const matchedBook = books.find((book) => book.title === bookTitle);
             if (matchedBook) {
                 setExpandedBookId(matchedBook._id);
+                const partNumber = location.pathname.split('/')[3];
+                if (partNumber) {
+                    const matchedPart = matchedBook.parts.find((part) =>
+                        part.part === parseInt(partNumber)
+                    );
+                    if (matchedPart) {
+                        setExpandedParts((prevExpandedParts) => ({
+                            ...prevExpandedParts,
+                            [matchedPart._id]: true,
+                        }));
+                    }
+                }
             }
         }
     }, [location, books]);
@@ -48,12 +59,14 @@ const MainLayout = () => {
         }));
     };
 
-    const sortedBooks = books ? [...books].sort((a, b) => {
-        if (a.volume && b.volume) {
-            return a.volume - b.volume;
-        }
-        return 0;
-    }) : [];
+    const sortedBooks = books
+        ? [...books].sort((a, b) => {
+              if (a.volume && b.volume) {
+                  return a.volume - b.volume;
+              }
+              return 0;
+          })
+        : [];
 
     return (
         <>
@@ -67,162 +80,153 @@ const MainLayout = () => {
                             <p>Loading...</p>
                         ) : (
                             <div>
-                                {sortedBooks.map(
-                                    (book) => (
-                                        (
-                                            <div
-                                                key={book._id}
-                                                className='mb-2'
+                                {sortedBooks.map((book) => (
+                                    <div key={book._id} className='mb-2'>
+                                        <div
+                                            className={`flex items-center justify-between py-1 px-3 bg-white rounded-r-full border-r-2 border-t-2 border-b-2 cursor-pointer hover:bg-gray-200 transition`}
+                                            style={{
+                                                borderColor: hexToRgba(
+                                                    book.color,
+                                                    expandedBookId === book._id
+                                                        ? 0.5
+                                                        : 0.25
+                                                ),
+                                            }}
+                                            onClick={() =>
+                                                toggleExpandBook(book._id)
+                                            }
+                                        >
+                                            <span>
+                                                {formattedBookTitle(book.title)}
+                                            </span>
+                                            <svg
+                                                className={`w-5 h-5 transform transition-transform ${
+                                                    expandedBookId === book._id
+                                                        ? 'rotate-180'
+                                                        : ''
+                                                }`}
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                                xmlns='http://www.w3.org/2000/svg'
                                             >
-                                                <div
-                                                    className={`flex items-center justify-between py-1 px-3 bg-white rounded-r-full border-r-2 border-t-2 border-b-2 cursor-pointer hover:bg-gray-200 transition`}
-                                                    style={{
-                                                        borderColor: hexToRgba(book.color, expandedBookId === book._id ? 0.5 : 0.25),
-                                                    }}
-                                                    onClick={() =>
-                                                        toggleExpandBook(
-                                                            book._id
-                                                        )
-                                                    }
-                                                >
-                                                    <span>
-                                                        {formattedBookTitle(book.title)}
-                                                    </span>
-                                                    <svg
-                                                        className={`w-5 h-5 transform transition-transform ${
-                                                            expandedBookId ===
-                                                            book._id
-                                                                ? 'rotate-180'
-                                                                : ''
-                                                        }`}
-                                                        fill='none'
-                                                        stroke='currentColor'
-                                                        viewBox='0 0 24 24'
-                                                        xmlns='http://www.w3.org/2000/svg'
-                                                    >
-                                                        <path
-                                                            strokeLinecap='round'
-                                                            strokeLinejoin='round'
-                                                            strokeWidth='2'
-                                                            d='M19 9l-7 7-7-7'
-                                                        ></path>
-                                                    </svg>
-                                                </div>
+                                                <path
+                                                    strokeLinecap='round'
+                                                    strokeLinejoin='round'
+                                                    strokeWidth='2'
+                                                    d='M19 9l-7 7-7-7'
+                                                ></path>
+                                            </svg>
+                                        </div>
 
+                                        <div
+                                            className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                                expandedBookId === book._id
+                                                    ? 'max-h-screen'
+                                                    : 'max-h-0'
+                                            }`}
+                                        >
+                                            <p
+                                                className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/books/${book.title}/introduction`
+                                                    )
+                                                }
+                                            >
+                                                Introduction
+                                            </p>
+                                            <p
+                                                className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/books/${book.title}/preface`
+                                                    )
+                                                }
+                                            >
+                                                Preface
+                                            </p>
+                                            {book.parts.map((part) => (
                                                 <div
-                                                    className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
-                                                        expandedBookId ===
-                                                        book._id
-                                                            ? 'max-h-screen'
-                                                            : 'max-h-0'
-                                                    }`}
+                                                    key={part._id}
+                                                    className='pl-3'
                                                 >
-                                                    <p
-                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
+                                                    <div
+                                                        className='flex items-center justify-between py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
                                                         onClick={() =>
-                                                            navigate(
-                                                                `/books/${book.title}/introduction`
+                                                            toggleExpandPart(
+                                                                part._id
                                                             )
                                                         }
                                                     >
-                                                        Introduction
-                                                    </p>
-                                                    <p
-                                                        className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-r-full'
-                                                        onClick={() =>
-                                                            navigate(
-                                                                `/books/${book.title}/preface`
-                                                            )
-                                                        }
-                                                    >
-                                                        Preface
-                                                    </p>
-                                                    {book.parts.map((part) => (
-                                                        <div
-                                                            key={part._id}
-                                                            className='pl-3'
+                                                        <span>
+                                                            {part.title}
+                                                        </span>
+                                                        <svg
+                                                            className={`w-4 h-4 transform transition-transform ${
+                                                                expandedParts[
+                                                                    part._id
+                                                                ]
+                                                                    ? 'rotate-180'
+                                                                    : ''
+                                                            }`}
+                                                            fill='none'
+                                                            stroke='currentColor'
+                                                            viewBox='0 0 24 24'
+                                                            xmlns='http://www.w3.org/2000/svg'
                                                         >
-                                                            <div
-                                                                className='flex items-center justify-between py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
-                                                                onClick={() =>
-                                                                    toggleExpandPart(
-                                                                        part._id
-                                                                    )
-                                                                }
-                                                            >
-                                                                <span>
-                                                                    {part.title}
-                                                                </span>
-                                                                <svg
-                                                                    className={`w-4 h-4 transform transition-transform ${
-                                                                        expandedParts[
-                                                                            part
-                                                                                ._id
-                                                                        ]
-                                                                            ? 'rotate-180'
-                                                                            : ''
-                                                                    }`}
-                                                                    fill='none'
-                                                                    stroke='currentColor'
-                                                                    viewBox='0 0 24 24'
-                                                                    xmlns='http://www.w3.org/2000/svg'
-                                                                >
-                                                                    <path
-                                                                        strokeLinecap='round'
-                                                                        strokeLinejoin='round'
-                                                                        strokeWidth='2'
-                                                                        d='M19 9l-7 7-7-7'
-                                                                    ></path>
-                                                                </svg>
-                                                            </div>
-                                                            <div
-                                                                className={`pl-3 transition-max-height duration-300 ease-in-out overflow-hidden ${
-                                                                    expandedParts[
-                                                                        part._id
-                                                                    ]
-                                                                        ? 'max-h-screen'
-                                                                        : 'max-h-0'
-                                                                }`}
-                                                            >
+                                                            <path
+                                                                strokeLinecap='round'
+                                                                strokeLinejoin='round'
+                                                                strokeWidth='2'
+                                                                d='M19 9l-7 7-7-7'
+                                                            ></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div
+                                                        className={`pl-3 transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                                            expandedParts[
+                                                                part._id
+                                                            ]
+                                                                ? 'max-h-screen'
+                                                                : 'max-h-0'
+                                                        }`}
+                                                    >
+                                                        <p
+                                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
+                                                            onClick={() =>
+                                                                navigate(
+                                                                    `/books/${book.title}/${part.part}/preface`
+                                                                )
+                                                            }
+                                                        >
+                                                            Preface
+                                                        </p>
+                                                        {part.chapters.map(
+                                                            (chapter) => (
                                                                 <p
+                                                                    key={
+                                                                        chapter._id
+                                                                    }
                                                                     className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
                                                                     onClick={() =>
                                                                         navigate(
-                                                                            `/books/${book.title}/${part.part}/preface`
+                                                                            `/books/${book.title}/${part.part}/${chapter.chapter}`
                                                                         )
                                                                     }
                                                                 >
-                                                                    Preface
+                                                                    {
+                                                                        chapter.title
+                                                                    }
                                                                 </p>
-                                                                {part.chapters.map(
-                                                                    (
-                                                                        chapter
-                                                                    ) => (
-                                                                        <p
-                                                                            key={
-                                                                                chapter._id
-                                                                            }
-                                                                            className='py-1 px-3 hover:bg-gray-200 cursor-pointer rounded-full'
-                                                                            onClick={() =>
-                                                                                navigate(
-                                                                                    `/books/${book.title}/${part.part}/${chapter.chapter}`
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                chapter.title
-                                                                            }
-                                                                        </p>
-                                                                    )
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                                            )
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    )
-                                )}
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         )}
                     </div>
