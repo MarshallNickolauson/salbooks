@@ -58,7 +58,7 @@ const BookPrefaceScreen = () => {
     ) : prefaceError ? (
         <p>Error: {prefaceError}</p>
     ) : (
-        <div>
+        <div className='p-4'>
             <div className='flex flex-row'>
                 <h1 className='text-2xl font-bold mb-4'>
                     {formattedBookTitle(bookTitle)}
