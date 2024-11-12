@@ -58,7 +58,7 @@ const MainLayout = () => {
                                         (
                                             <div
                                                 key={book._id}
-                                                className='mb-4'
+                                                className='mb-2'
                                             >
                                                 <div
                                                     className={`flex items-center justify-between py-1 px-3 bg-white rounded-lg border-2 border-[${book.color}] cursor-pointer hover:bg-gray-200 transition`}
