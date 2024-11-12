@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const chapterSchema = mongoose.Schema({
     chapter: { type: Number, required: true },
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { type: String },
 });
 
 const partSchema = mongoose.Schema({
@@ -19,7 +19,7 @@ const bookSchema = mongoose.Schema(
         introduction: { type: String },
         preface: { type: String },
         parts: [partSchema],
-        aboutAuthor: { type: String, required: true },
+        aboutAuthor: { type: String },
         color: { type: String },
     },
     { timestamps: true }

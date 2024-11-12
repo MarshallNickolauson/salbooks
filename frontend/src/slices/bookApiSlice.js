@@ -25,6 +25,13 @@ export const bookApiSlice = apiSlice.injectEndpoints({
                 credentials: 'include',
             }),
         }),
+        deleteBookById: builder.mutation({
+            query: (id) => ({
+                url: `${BOOKS_URL}/${id}`,
+                method: 'DELETE',
+                credentials: 'include',
+            }),
+        }),
         getBooks: builder.query({
             query: () => ({
                 url: BOOKS_URL,
@@ -94,6 +101,7 @@ export const {
     useGetBookByIdQuery,
     useCreateBookMutation,
     useUpdateBookMutation,
+    useDeleteBookByIdMutation,
     useGetBooksQuery,
     useGetBookIntroductionByTitleQuery,
     useGetBookPrefaceByTitleQuery,

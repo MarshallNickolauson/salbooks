@@ -44,7 +44,7 @@ const BooksListScreen = () => {
                                 key={book._id}
                                 className='bg-white shadow-sm border border-gray-200 rounded-lg p-4 hover:cursor-pointer transition-transform duration-150 hover:scale-[1.02]'
                                 onClick={() =>
-                                    navigate(`/admin/book/${book._id}`)
+                                    navigate(`/admin/books/${book._id}`)
                                 }
                             >
                                 <p className='text-lg text-gray-900 font-medium'>

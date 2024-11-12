@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import {
     createBook,
+    deleteBookById,
     getAuthorContentByTitle,
     getBookById,
     getBookIntroductionByTitle,
@@ -38,6 +39,6 @@ router
     .put(updateChapterContentByTitleAndNumbers);
 router.route('/:bookTitle/author/about').get(getAuthorContentByTitle);
 
-router.route('/:id').get(getBookById).put(protect, admin, updateBook);
+router.route('/:id').get(getBookById).put(protect, admin, updateBook).delete(protect, admin, deleteBookById);
 
 export default router;

@@ -48,7 +48,6 @@ const MainLayout = () => {
                             <div>
                                 {books.map(
                                     (book) => (
-                                        console.log(book.color),
                                         (
                                             <div
                                                 key={book._id}

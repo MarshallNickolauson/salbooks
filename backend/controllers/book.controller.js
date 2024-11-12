@@ -7,7 +7,15 @@ import Book from '../models/book.model.js';
 export const getBookById = expressAsyncHandler(async (req, res) => {
     const book = await Book.findById(req.params.id);
     if (book) {
-        res.json(book);
+        res.json({
+            _id: book._id,
+            title: book.title,
+            introduction: book.introduction,
+            preface: book.preface,
+            parts: book.parts,
+            aboutAuthor: book.aboutAuthor,
+            color: book.color,
+        });
     } else {
         res.status(404);
         throw new Error('Book not found');
@@ -56,10 +64,10 @@ export const updateBook = expressAsyncHandler(async (req, res) => {
 // @desc    Delete a book
 // @route   DELETE /api/books/:id
 // @access  Private/Admin
-export const deleteBook = expressAsyncHandler(async (req, res) => {
+export const deleteBookById = expressAsyncHandler(async (req, res) => {
     const book = await Book.findById(req.params.id);
     if (book) {
-        await book.remove();
+        await book.deleteOne();
         res.json({ message: `Book '${book.title}' removed` });
     } else {
         res.status(404);
