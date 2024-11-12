@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import {
     useDeleteBookByIdMutation,
     useGetBookByIdQuery,
