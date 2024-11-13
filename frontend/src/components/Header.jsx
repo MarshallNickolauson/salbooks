@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLogoutUserMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import { FaBook } from "react-icons/fa6";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
@@ -73,19 +74,20 @@ function Header() {
                         </button>
                     </div>
                     <div className='flex-1 flex justify-center sm:justify-between'>
-                        <div className='flex-shrink-0 flex items-center'>
+                        <div className='flex-shrink-0 flex items-center space-x-2'>
+                            <FaBook size={25} className='mt-1' />
                             <Link
                                 to='/'
-                                className='text-gray-900 tracking-wide rounded-md text-md font-bold'
+                                className='text-gray-900 tracking-wide rounded-md text-xl'
                             >
                                 Studies in Abundant Living
                             </Link>
                         </div>
                         <div className='hidden sm:block sm:ml-6'>
-                            <div className='flex flex-row justify-end'>
+                            <div className='flex flex-row justify-end space-x-5 pr-2'>
                                 <Link
                                     to='/'
-                                    className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                    className='text-gray-900 py-2 rounded-md text-md font-medium hover:underline underline-offset-[10px]'
                                 >
                                     Dashboard
                                 </Link>
@@ -93,21 +95,21 @@ function Header() {
                                     <>
                                         <Link
                                             to='/profile'
-                                            className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                            className='text-gray-900 py-2 rounded-md text-md font-medium hover:underline underline-offset-[10px]'
                                         >
                                             Hi, {userInfo.name}
                                         </Link>
                                         {userInfo.isAdmin && (
                                             <Link
                                                 to='/admin'
-                                                className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium'
+                                                className='text-gray-900 py-2 rounded-md text-md font-medium hover:underline underline-offset-[10px]'
                                             >
                                                 Admin
                                             </Link>
                                         )}
                                         <p
                                             onClick={handleLogout}
-                                            className='text-gray-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer'
+                                            className='text-gray-900 py-2 rounded-md text-md font-medium cursor-pointer hover:underline underline-offset-[10px]'
                                         >
                                             Logout
                                         </p>
