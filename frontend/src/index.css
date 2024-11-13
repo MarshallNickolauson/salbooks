@@ -14,21 +14,3 @@ html, body {
     background-position: center;
     min-height: 100%;
 }
-
-div::-webkit-scrollbar {
-    width: 6px; /* Thin width */
-    height: 6px; /* Thin height for horizontal scrollbar */
-}
-
-div::-webkit-scrollbar-thumb {
-    background-color: rgba(100, 100, 100, 0.3); /* Minimal color */
-    border-radius: 10px; /* Rounded corners */
-}
-
-div::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(100, 100, 100, 0.5); /* Slightly darker on hover */
-}
-
-div::-webkit-scrollbar-track {
-    background: transparent; /* Transparent track */
-}

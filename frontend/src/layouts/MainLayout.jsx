@@ -96,7 +96,7 @@ const MainLayout = () => {
             {/* Main container holding sidebar and content */}
             <div className='flex h-full pt-[77px]'>
                 {/* Sidebar */}
-                <div className='w-[310px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/60 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-xl'>
+                <div className='w-[310px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/70 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-lg'>
                     <div
                         className='flex-1  overflow-y-auto'
                         style={{
