@@ -78,6 +78,26 @@ const MainLayout = () => {
         }
     }, [location, books, expandedBookId]);
 
+    const convertToRomanNumeral = (num) => {
+        const romanNumerals = {
+            IX: 9,
+            V: 5,
+            IV: 4,
+            I: 1,
+        };
+
+        let roman = '';
+
+        for (let key in romanNumerals) {
+            while (num >= romanNumerals[key]) {
+                roman += key;
+                num -= romanNumerals[key];
+            }
+        }
+
+        return roman;
+    };
+
     const sortedBooks = books
         ? [...books].sort((a, b) => {
               if (a.volume && b.volume) {
@@ -87,6 +107,15 @@ const MainLayout = () => {
           })
         : [];
 
+    const formatChapterNumber = (book, partNumber, chapterNumber) => {
+        let chapterNum = 0;
+        for (let i = 0; i < partNumber - 1; i++) {
+            chapterNum += book.parts[i].chapters.length;
+        }
+        chapterNum += chapterNumber;
+        return chapterNum;
+    };
+
     return (
         <div className='h-screen flex flex-col'>
             <div className='fixed top-0 left-0 right-0 z-10 mr-4'>
@@ -94,9 +123,9 @@ const MainLayout = () => {
             </div>
             <ToastContainer />
             {/* Main container holding sidebar and content */}
-            <div className='flex h-full pt-[77px]'>
+            <div className='flex h-full pt-[78px]'>
                 {/* Sidebar */}
-                <div className='w-[310px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/70 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-lg'>
+                <div className='w-[400px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/70 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-lg'>
                     <div
                         className='flex-1  overflow-y-auto'
                         style={{
@@ -152,9 +181,9 @@ const MainLayout = () => {
                                         </div>
                                         {/* Parts of the book */}
                                         <div
-                                            className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                            className={`transition-all duration-300 ease-in-out overflow-hidden ${
                                                 expandedBookId === book._id
-                                                    ? 'max-h-screen'
+                                                    ? 'max-h-[3000px]'
                                                     : 'max-h-0'
                                             }`}
                                         >
@@ -203,8 +232,12 @@ const MainLayout = () => {
                                                             )
                                                         }
                                                     >
-                                                        <span>
-                                                            {part.title}
+                                                        <span className='underline underline-offset-2'>
+                                                            Part{' '}
+                                                            {convertToRomanNumeral(
+                                                                part.part
+                                                            )}
+                                                            : <i>{part.title}</i>
                                                         </span>
                                                         <svg
                                                             className={`w-4 h-4 transform transition-transform ${
@@ -228,11 +261,11 @@ const MainLayout = () => {
                                                         </svg>
                                                     </div>
                                                     <div
-                                                        className={`pl-3 transition-max-height duration-300 ease-in-out overflow-hidden ${
+                                                        className={`pl-3 transition-max-height duration-300 ease-in-out overflow-y-auto ${
                                                             expandedParts[
                                                                 part._id
                                                             ]
-                                                                ? 'max-h-screen'
+                                                                ? 'max-h-[1000px]'
                                                                 : 'max-h-0'
                                                         }`}
                                                     >
@@ -271,9 +304,14 @@ const MainLayout = () => {
                                                                         )
                                                                     }
                                                                 >
-                                                                    {
-                                                                        chapter.title
-                                                                    }
+                                                                    Ch.{' '}
+                                                                    {formatChapterNumber(
+                                                                        book,
+                                                                        part.part,
+                                                                        chapter.chapter
+                                                                    )}
+                                                                    :{' '}
+                                                                    <i>{chapter.title}</i>
                                                                 </p>
                                                             )
                                                         )}
