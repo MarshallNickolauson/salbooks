@@ -12,6 +12,9 @@ const MainLayout = () => {
     const [expandedParts, setExpandedParts] = useState({});
     const [currentColor, setCurrentColor] = useState('#000000');
 
+    const hoverColor = 'hover:bg-slate-50/60';
+    const currentItemColor = 'bg-slate-50/90 hover:bg-none';
+
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -85,13 +88,19 @@ const MainLayout = () => {
         : [];
 
     return (
-        <>
-            <Header />
+        <div className='h-screen flex flex-col'>
+            <div className='fixed top-0 left-0 right-0 z-10'>
+                <Header />
+            </div>
+
             <ToastContainer />
-            {/* Sidebar */}
-            <div className='flex h-[90vh] font-roboto bg-mainBluishWhite'>
-                <div className='w-[300px] flex flex-col h-full overflow-hidden pt-2 pr-3 shadow-lg'>
-                    <div className='flex-1 overflow-y-auto'>
+            {/* Main container holding sidebar and content */}
+            <div className='flex h-full pt-[65px]'>
+                {/* Sidebar */}
+                <div
+                    className='w-[300px] flex flex-col h-full overflow-y-auto pt-2 pr-3 shadow-lg bg-mainBluishWhite/60 backdrop-blur-lg rounded-tr-xl'
+                >
+                    <div className='flex-1'>
                         {isLoading ? (
                             <p>Loading...</p>
                         ) : (
@@ -99,13 +108,14 @@ const MainLayout = () => {
                                 {sortedBooks.map((book) => (
                                     <div key={book._id} className='mb-2'>
                                         <div
-                                            className={`flex items-center justify-between py-1 px-3 bg-transparent rounded-r-full border-r border-t border-b cursor-pointer hover:bg-slate-200 transition`}
+                                            className={`flex items-center justify-between py-1 px-3 bg-transparent rounded-r-full  cursor-pointer transition ${hoverColor}`}
                                             style={{
-                                                borderColor: hexToRgba(
+                                                
+                                                backgroundColor: hexToRgba(
                                                     book.color,
                                                     expandedBookId === book._id
-                                                        ? 1
-                                                        : 0.25
+                                                        ? 0.5
+                                                        : 0.2
                                                 ),
                                             }}
                                             onClick={() => {
@@ -134,7 +144,7 @@ const MainLayout = () => {
                                                 ></path>
                                             </svg>
                                         </div>
-
+                                        {/* Parts of the book */}
                                         <div
                                             className={`transition-max-height duration-300 ease-in-out overflow-hidden ${
                                                 expandedBookId === book._id
@@ -147,8 +157,8 @@ const MainLayout = () => {
                                                     isActive(
                                                         `/books/${book.title}/introduction`
                                                     )
-                                                        ? 'bg-blue-200 hover:bg-none'
-                                                        : 'hover:bg-slate-200'
+                                                        ? currentItemColor
+                                                        : hoverColor
                                                 }`}
                                                 onClick={() =>
                                                     navigate(
@@ -163,8 +173,8 @@ const MainLayout = () => {
                                                     isActive(
                                                         `/books/${book.title}/preface`
                                                     )
-                                                        ? 'bg-blue-200 hover:bg-none'
-                                                        : 'hover:bg-slate-200'
+                                                        ? currentItemColor
+                                                        : hoverColor
                                                 }`}
                                                 onClick={() =>
                                                     navigate(
@@ -180,7 +190,7 @@ const MainLayout = () => {
                                                     className='pl-3'
                                                 >
                                                     <div
-                                                        className='flex items-center justify-between py-1 px-3 hover:bg-slate-200 cursor-pointer rounded-full transition-all duration-150'
+                                                        className={`flex items-center justify-between py-1 px-3 cursor-pointer rounded-full transition-all duration-150 ${hoverColor}`}
                                                         onClick={() =>
                                                             toggleExpandPart(
                                                                 part._id
@@ -225,8 +235,8 @@ const MainLayout = () => {
                                                                 isActive(
                                                                     `/books/${book.title}/${part.part}/preface`
                                                                 )
-                                                                    ? 'bg-blue-200 hover:bg-none'
-                                                                    : 'hover:bg-slate-200'
+                                                                    ? currentItemColor
+                                                                    : hoverColor
                                                             }`}
                                                             onClick={() =>
                                                                 navigate(
@@ -246,8 +256,8 @@ const MainLayout = () => {
                                                                         isActive(
                                                                             `/books/${book.title}/${part.part}/${chapter.chapter}`
                                                                         )
-                                                                            ? 'bg-blue-200 hover:bg-none'
-                                                                            : 'hover:bg-slate-200'
+                                                                            ? currentItemColor
+                                                                            : hoverColor
                                                                     }`}
                                                                     onClick={() =>
                                                                         navigate(
@@ -274,15 +284,12 @@ const MainLayout = () => {
 
                 {/* Main content area */}
                 <div
-                    className='flex-1 overflow-y-auto bg-white rounded-2xl mr-6 border'
-                    style={{
-                        borderColor: hexToRgba(currentColor, 1),
-                    }}
+                    className='flex-1 overflow-y-auto bg-white/70 backdrop-blur-lg border-b-0 shadow-gray-500 shadow-xl rounded-t-xl mx-4'
                 >
                     <Outlet />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
