@@ -89,28 +89,34 @@ const MainLayout = () => {
 
     return (
         <div className='h-screen flex flex-col'>
-            <div className='fixed top-0 left-0 right-0 z-10'>
+            <div className='fixed top-0 left-0 right-0 z-10 mr-4'>
                 <Header />
             </div>
-
             <ToastContainer />
             {/* Main container holding sidebar and content */}
-            <div className='flex h-full pt-[65px]'>
+            <div className='flex h-full pt-[77px]'>
                 {/* Sidebar */}
-                <div
-                    className='w-[300px] flex flex-col h-full overflow-y-auto pt-2 pr-3 shadow-lg bg-mainBluishWhite/60 backdrop-blur-lg rounded-tr-xl'
-                >
-                    <div className='flex-1'>
+                <div className='w-[310px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/60 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-xl'>
+                    <div
+                        className='flex-1  overflow-y-auto'
+                        style={{
+                            scrollbarWidth: 'thin',
+                            scrollbarColor:
+                                'rgba(100, 100, 100, 0.6) transparent',
+                            marginTop: '-10px',
+                            paddingTop: '10px',
+                            paddingRight: '8px',
+                        }}
+                    >
                         {isLoading ? (
                             <p>Loading...</p>
                         ) : (
-                            <div>
+                            <div className='pr-1'>
                                 {sortedBooks.map((book) => (
                                     <div key={book._id} className='mb-2'>
                                         <div
                                             className={`flex items-center justify-between py-1 px-3 bg-transparent rounded-r-full  cursor-pointer transition ${hoverColor}`}
                                             style={{
-                                                
                                                 backgroundColor: hexToRgba(
                                                     book.color,
                                                     expandedBookId === book._id
@@ -283,9 +289,7 @@ const MainLayout = () => {
                 </div>
 
                 {/* Main content area */}
-                <div
-                    className='flex-1 overflow-y-auto bg-white/70 backdrop-blur-lg border-b-0 shadow-gray-500 shadow-xl rounded-t-xl mx-4'
-                >
+                <div className='flex-1 overflow-y-auto bg-white/70 backdrop-blur-lg border-b-0 shadow-gray-500 shadow-xl rounded-t-xl mx-4'>
                     <Outlet />
                 </div>
             </div>
