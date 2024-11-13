@@ -25,7 +25,7 @@ function Header() {
     };
 
     return (
-        <nav className='bg-mainBluishWhite/60 backdrop-blur-lg rounded-br-xl drop-shadow-lg'>
+        <nav className='bg-mainBluishWhite/70 backdrop-blur-lg rounded-br-xl drop-shadow-lg'>
             <div className='w-full px-3'>
                 <div className='relative flex items-center justify-between h-16'>
                     <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
