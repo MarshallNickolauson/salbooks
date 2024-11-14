@@ -101,7 +101,7 @@ const BookPrefaceScreen = () => {
                         <p>No content to display</p>
                     ) : (
                         <div
-                            className='formatted-content text-sm'
+                            className='formatted-content'
                             dangerouslySetInnerHTML={{
                                 __html: prefaceContent,
                             }}
