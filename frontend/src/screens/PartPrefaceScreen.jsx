@@ -10,6 +10,7 @@ import quillModules from '../utils/quillModules';
 import formattedBookTitle from '../utils/formatBookTitle';
 import Loader from '../components/Loader';
 import { useSelector } from 'react-redux';
+import convertToRomanNumeral from '../utils/convertToRomanNumeral';
 
 const PartPrefaceScreen = () => {
     const { bookTitle, partNumber } = useParams();
@@ -64,9 +65,9 @@ const PartPrefaceScreen = () => {
         <p>Error: {partPrefaceError}</p>
     ) : (
         <div className='p-4'>
-            <div className='flex flex-row'>
-                <h1 className='text-2xl font-bold mb-4'>
-                    {formattedBookTitle(bookTitle)}
+            <div className='flex flex-row mb-4 items-center'>
+                <h1 className='text-xl font-bold text-center flex-1'>
+                    Part {convertToRomanNumeral(partNumber)} Preface
                 </h1>               
                 {userInfo && userInfo.isAdmin && (
                     <div className='ml-auto flex items-center space-x-1'>

@@ -59,9 +59,9 @@ const BookPrefaceScreen = () => {
         <p>Error: {prefaceError}</p>
     ) : (
         <div className='p-4'>
-            <div className='flex flex-row'>
-                <h1 className='text-2xl font-bold mb-4'>
-                    {formattedBookTitle(bookTitle)}
+            <div className='flex flex-row mb-4 items-center'>
+                <h1 className='flex-1 text-xl font-bold text-center'>
+                    Preface
                 </h1>
                 {userInfo && userInfo.isAdmin && (
                     <div className='ml-auto flex items-center space-x-1'>
@@ -101,7 +101,7 @@ const BookPrefaceScreen = () => {
                         <p>No content to display</p>
                     ) : (
                         <div
-                            className='formatted-content'
+                            className='formatted-content text-sm'
                             dangerouslySetInnerHTML={{
                                 __html: prefaceContent,
                             }}

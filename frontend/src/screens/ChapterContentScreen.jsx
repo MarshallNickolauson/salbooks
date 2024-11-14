@@ -62,9 +62,9 @@ const ChapterContentScreen = () => {
         <p>Error: {chapterContentError}</p>
     ) : (
         <div className='p-4'>
-            <div className='flex flex-row'>
-                <h1 className='text-2xl font-bold mb-4'>
-                    {formattedBookTitle(bookTitle)}
+            <div className='flex flex-row items-center mb-4'>
+                <h1 className='text-xl font-bold flex-1 text-center'>
+                    {chapterContentData.title}
                 </h1>
                 {userInfo && userInfo.isAdmin && (
                     <div className='ml-auto flex items-center space-x-1'>

@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import formattedBookTitle from '../utils/formatBookTitle';
 import hexToRgba from '../utils/hexToRgba';
+import convertToRomanNumeral from '../utils/convertToRomanNumeral';
 
 const MainLayout = () => {
     const [expandedBookId, setExpandedBookId] = useState(null);
@@ -53,7 +54,7 @@ const MainLayout = () => {
     }, [refetch]);
 
     const toggleExpandBook = (bookId) => {
-        setExpandedBookId(bookId === expandedBookId ? null : bookId);
+        setExpandedBookId(bookId == expandedBookId ? null : bookId);
     };
 
     const toggleExpandPart = (partId) => {
@@ -77,26 +78,6 @@ const MainLayout = () => {
             }
         }
     }, [location, books, expandedBookId]);
-
-    const convertToRomanNumeral = (num) => {
-        const romanNumerals = {
-            IX: 9,
-            V: 5,
-            IV: 4,
-            I: 1,
-        };
-
-        let roman = '';
-
-        for (let key in romanNumerals) {
-            while (num >= romanNumerals[key]) {
-                roman += key;
-                num -= romanNumerals[key];
-            }
-        }
-
-        return roman;
-    };
 
     const sortedBooks = books
         ? [...books].sort((a, b) => {
@@ -125,7 +106,7 @@ const MainLayout = () => {
             {/* Main container holding sidebar and content */}
             <div className='flex h-full pt-[78px]'>
                 {/* Sidebar */}
-                <div className='w-[400px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/70 backdrop-blur-lg rounded-tr-xl shadow-gray-500 shadow-lg'>
+                <div className='w-[400px] flex flex-col h-full pt-5 pr-1 bg-mainBluishWhite/70 backdrop-blur-xl rounded-tr-xl shadow-gray-500 shadow-lg'>
                     <div
                         className='flex-1  overflow-y-auto'
                         style={{
@@ -237,7 +218,8 @@ const MainLayout = () => {
                                                             {convertToRomanNumeral(
                                                                 part.part
                                                             )}
-                                                            : <i>{part.title}</i>
+                                                            :{' '}
+                                                            <i>{part.title}</i>
                                                         </span>
                                                         <svg
                                                             className={`w-4 h-4 transform transition-transform ${
@@ -311,7 +293,11 @@ const MainLayout = () => {
                                                                         chapter.chapter
                                                                     )}
                                                                     :{' '}
-                                                                    <i>{chapter.title}</i>
+                                                                    <i>
+                                                                        {
+                                                                            chapter.title
+                                                                        }
+                                                                    </i>
                                                                 </p>
                                                             )
                                                         )}
@@ -327,7 +313,7 @@ const MainLayout = () => {
                 </div>
 
                 {/* Main content area */}
-                <div className='flex-1 overflow-y-auto bg-white/70 backdrop-blur-lg border-b-0 shadow-gray-500 shadow-xl rounded-t-xl mx-4'>
+                <div className='flex-1 max-w-[450px] overflow-y-auto bg-white/70 backdrop-blur-3xl border-b-0 shadow-gray-500 shadow-xl rounded-t-xl mx-4'>
                     <Outlet />
                 </div>
             </div>
